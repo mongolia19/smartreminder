@@ -1,0 +1,9 @@
+D:\Users\MeAndroid\documents\visual studio 2010\Projects\SmartReminder\SmartReminder\bin\Debug\SmartReminder.exe
+D:\Users\MeAndroid\documents\visual studio 2010\Projects\SmartReminder\SmartReminder\bin\Debug\SmartReminder.pdb
+D:\Users\MeAndroid\documents\visual studio 2010\Projects\SmartReminder\SmartReminder\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\Users\MeAndroid\documents\visual studio 2010\Projects\SmartReminder\SmartReminder\obj\x86\Debug\SmartReminder.Form1.resources
+D:\Users\MeAndroid\documents\visual studio 2010\Projects\SmartReminder\SmartReminder\obj\x86\Debug\SmartReminder.Properties.Resources.resources
+D:\Users\MeAndroid\documents\visual studio 2010\Projects\SmartReminder\SmartReminder\obj\x86\Debug\GenerateResource.read.1.tlog
+D:\Users\MeAndroid\documents\visual studio 2010\Projects\SmartReminder\SmartReminder\obj\x86\Debug\GenerateResource.write.1.tlog
+D:\Users\MeAndroid\documents\visual studio 2010\Projects\SmartReminder\SmartReminder\obj\x86\Debug\SmartReminder.exe
+D:\Users\MeAndroid\documents\visual studio 2010\Projects\SmartReminder\SmartReminder\obj\x86\Debug\SmartReminder.pdb
