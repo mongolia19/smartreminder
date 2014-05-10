@@ -9,7 +9,7 @@ namespace SmartReminder
     class sentence_matcher
     {
         String name;
-       Double MatchPrecent=0.01;
+       Double MatchPrecent=0.5;
        public sentence_matcher() 
         {
             SearchError = "I don't know!";
@@ -18,20 +18,27 @@ namespace SmartReminder
         {
             
             String [] words=WordFilter(sentence);
-            int wordNum = words.GetLength(0);
+            int wordNum= words.GetLength(0);
             for (int i = 0; i < sentence_list.Count; i++)
             {
+                Q_n_A q = (Q_n_A)sentence_list[i];
                 int hitNum=0;////record the num that hits the words in the sentence
+                int SentenceListWordCnt=((Q_n_A)sentence_list[i]).question.Split(' ').GetLength(0);
                 for (int j = 0; j < wordNum; j++)
                 {
-                    if (sentence_list[i].ToString().Contains(words[j]))
+                    if (q.question.Contains(words[j]))
                     {
                         hitNum++;
                     }
-                    if ((float)((float)hitNum/(float)wordNum)>=MatchPrecent)
+                    if (j==wordNum-1)
                     {
-                        return sentence_list[i].ToString();
+                        if ((float)((float)hitNum / (float)SentenceListWordCnt) >= MatchPrecent && (hitNum!=SentenceListWordCnt))
+                        {
+                            return q.question;
+                        }
+                        
                     }
+                   
                 }   
             }
             return SearchError;

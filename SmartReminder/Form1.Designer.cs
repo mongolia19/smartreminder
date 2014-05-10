@@ -59,6 +59,7 @@
             this.respond_textBox.Name = "respond_textBox";
             this.respond_textBox.Size = new System.Drawing.Size(435, 282);
             this.respond_textBox.TabIndex = 2;
+            this.respond_textBox.TextChanged += new System.EventHandler(this.respond_textBox_TextChanged);
             // 
             // Form1
             // 
