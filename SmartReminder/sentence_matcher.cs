@@ -9,7 +9,7 @@ namespace SmartReminder
     class sentence_matcher
     {
         String name;
-       Double MatchPrecent=0.5;
+       Double MatchPrecent=0.01;
        public sentence_matcher() 
         {
             SearchError = "I don't know!";
@@ -19,6 +19,8 @@ namespace SmartReminder
             
             String [] words=WordFilter(sentence);
             int wordNum= words.GetLength(0);
+            String sentence2return = SearchError;
+            double match_rate = 0;
             for (int i = 0; i < sentence_list.Count; i++)
             {
                 Q_n_A q = (Q_n_A)sentence_list[i];
@@ -34,14 +36,16 @@ namespace SmartReminder
                     {
                         if ((float)((float)hitNum / (float)SentenceListWordCnt) >= MatchPrecent && (hitNum!=SentenceListWordCnt))
                         {
-                            return q.question;
+                            match_rate = (float)((float)hitNum / (float)SentenceListWordCnt);
+                            sentence2return = q.question;
+                           // return q.question;
                         }
                         
                     }
                    
                 }   
             }
-            return SearchError;
+            return sentence2return;
         }
         String[] WordFilter(String sentence) 
         {

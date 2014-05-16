@@ -15,6 +15,7 @@ namespace SmartReminder
 {
     public partial class Form1 : Form
     {
+        public String answer;
         public int AlertTime = 0;
         sentence_matcher matcher;
         ArrayList sentenceList;
@@ -42,6 +43,18 @@ namespace SmartReminder
         
         
         }
+        private void read_all_file_in_dir( String dir ,ArrayList memory)
+        {
+            string[] fn = Directory.GetFiles(dir);
+            foreach (string s in fn)
+            {
+                String [] tempFileName = read_file( s);
+                get_string_array_into_arraylist(tempFileName, memory);
+                
+            }
+
+        }
+
 
         private void StartTimer(String reminder)
         {
@@ -168,7 +181,7 @@ namespace SmartReminder
             {
                 
                 strLine = m_streamReader.ReadLine();
-                if (strLine != null&&!strLine.Equals(""))
+                if (strLine != null && !strLine.Equals("") && !strLine.Trim().Equals("") && strLine.Trim()!=null)
                 {
                     tempArray.Add(strLine.Trim());
                 }
@@ -199,22 +212,33 @@ namespace SmartReminder
             return asm_file;
 
         }
+         void get_string_array_into_arraylist(String [] string_array,ArrayList array)
+        {
+
+            for (int i = 0; i < string_array.GetLength(0); i++)
+            {
+                Q_n_A tempq = new Q_n_A(string_array[i].ToString(), "");
+
+                array.Add(tempq);
+
+            }
+
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
-            Memery= read_file("g:\\enstopword.txt");
+            //Memery= read_file("g:\\enstopword.txt");
             
             matcher = new sentence_matcher();
             sentenceList = new ArrayList();
-           
+            read_all_file_in_dir("D:\\TrainTxt\\",sentenceList);
 
-            for (int i = 0; i < Memery.GetLength(0); i++)
+            /*            for (int i = 0; i < Memery.GetLength(0); i++)
             {
                 Q_n_A tempq = new Q_n_A(Memery[i].ToString(), "");
-
                 sentenceList.Add(tempq);
+            } */
 
-  
-            }
             sentenceList.Add(new Q_n_A("remind me wake",""));
             sentenceList.Add( new Q_n_A("the weather is sunny",""));
         }
@@ -229,16 +253,39 @@ namespace SmartReminder
 
             String Humanwords = talk_textBox.Text.Trim().ToLower();
             current_cmd = Humanwords;
-            String cmd=matcher.Match(Humanwords, sentenceList);
-            cmd_Handler(cmd);
+            answer=matcher.Match(Humanwords, sentenceList);
+            LatestAnswertextBox.Text = answer;
 
-            cmd = matcher.Match(cmd, sentenceList);
-            cmd_Handler(cmd);
+            cmd_Handler(answer);
+
+           
         }
 
         private void respond_textBox_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+            SetAnswerForQuestion(current_cmd,LatestAnswertextBox.Text,sentenceList);
+
+        }
+
+        private void SetAnswerForQuestion(String q,String a,ArrayList list)
+        {
+            for (int i = 0; i < list.Count; i++)
+            {
+                Q_n_A tqa=(Q_n_A)list[i];
+                if (tqa.question.Equals(q))
+                {
+                    tqa.anser = a;
+                    list[i] = tqa;
+                    return;
+                }
+
+            }
         }
     }
 }

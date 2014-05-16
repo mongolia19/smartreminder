@@ -31,6 +31,9 @@
             this.talk_textBox = new System.Windows.Forms.TextBox();
             this.talk_button = new System.Windows.Forms.Button();
             this.respond_textBox = new System.Windows.Forms.TextBox();
+            this.Good_Mark_btn = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.LatestAnswertextBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // talk_textBox
@@ -54,18 +57,48 @@
             // 
             // respond_textBox
             // 
-            this.respond_textBox.Location = new System.Drawing.Point(12, 85);
+            this.respond_textBox.Location = new System.Drawing.Point(12, 12);
             this.respond_textBox.Multiline = true;
             this.respond_textBox.Name = "respond_textBox";
-            this.respond_textBox.Size = new System.Drawing.Size(435, 282);
+            this.respond_textBox.Size = new System.Drawing.Size(435, 312);
             this.respond_textBox.TabIndex = 2;
             this.respond_textBox.TextChanged += new System.EventHandler(this.respond_textBox_TextChanged);
+            // 
+            // Good_Mark_btn
+            // 
+            this.Good_Mark_btn.Location = new System.Drawing.Point(453, 328);
+            this.Good_Mark_btn.Name = "Good_Mark_btn";
+            this.Good_Mark_btn.Size = new System.Drawing.Size(105, 23);
+            this.Good_Mark_btn.TabIndex = 3;
+            this.Good_Mark_btn.Text = "Good Answer";
+            this.Good_Mark_btn.UseVisualStyleBackColor = true;
+            this.Good_Mark_btn.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(453, 357);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(105, 23);
+            this.button2.TabIndex = 4;
+            this.button2.Text = "Bad Answer";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // LatestAnswertextBox
+            // 
+            this.LatestAnswertextBox.Location = new System.Drawing.Point(12, 330);
+            this.LatestAnswertextBox.Multiline = true;
+            this.LatestAnswertextBox.Name = "LatestAnswertextBox";
+            this.LatestAnswertextBox.Size = new System.Drawing.Size(435, 43);
+            this.LatestAnswertextBox.TabIndex = 5;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(924, 505);
+            this.Controls.Add(this.LatestAnswertextBox);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.Good_Mark_btn);
             this.Controls.Add(this.respond_textBox);
             this.Controls.Add(this.talk_button);
             this.Controls.Add(this.talk_textBox);
@@ -82,6 +115,9 @@
         private System.Windows.Forms.TextBox talk_textBox;
         private System.Windows.Forms.Button talk_button;
         private System.Windows.Forms.TextBox respond_textBox;
+        private System.Windows.Forms.Button Good_Mark_btn;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.TextBox LatestAnswertextBox;
     }
 }
 
