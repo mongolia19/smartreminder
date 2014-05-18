@@ -34,7 +34,7 @@ namespace SmartReminder
                     }
                     if (j==wordNum-1)
                     {
-                        if ((float)((float)hitNum / (float)SentenceListWordCnt) >= MatchPrecent && (hitNum!=SentenceListWordCnt))
+                        if ((float)((float)hitNum / (float)SentenceListWordCnt) >= MatchPrecent && (float)((float)hitNum / (float)SentenceListWordCnt) < 0.89 && (float)((float)hitNum / (float)SentenceListWordCnt) >= match_rate)
                         {
                             match_rate = (float)((float)hitNum / (float)SentenceListWordCnt);
                             sentence2return = q.question;

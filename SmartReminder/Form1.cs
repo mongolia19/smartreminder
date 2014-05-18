@@ -175,34 +175,12 @@ namespace SmartReminder
 
             m_streamReader.BaseStream.Seek(0, SeekOrigin.Begin);
             //string arry = "";
-            string strLine;
+            //string strLine;
             ArrayList tempArray = new ArrayList();
-            do
-            {
-                
-                strLine = m_streamReader.ReadLine();
-                if (strLine != null && !strLine.Equals("") && !strLine.Trim().Equals("") && strLine.Trim()!=null)
-                {
-                    tempArray.Add(strLine.Trim());
-                }
+            String strAll= m_streamReader.ReadToEnd();
 
-
-            } while (strLine != null);
-
-            String[] asm_file = new String[tempArray.Count];
-
-            for (int i = 0; i < tempArray.Count; i++)
-            {
-                if (tempArray[i].ToString() == "")
-                {
-                    tempArray.RemoveAt(i);
-                }
-            }
-
-            for (int i = 0; i < tempArray.Count; i++)
-            {
-                asm_file[i] = Convert.ToString(tempArray[i]);
-            }
+            String[] asm_file = strAll.Split('.', '!', '?');
+               // = new String[tempArray.Count];
 
             m_streamReader.Close();
             m_streamReader.Dispose();
@@ -239,8 +217,8 @@ namespace SmartReminder
                 sentenceList.Add(tempq);
             } */
 
-            sentenceList.Add(new Q_n_A("remind me wake",""));
-            sentenceList.Add( new Q_n_A("the weather is sunny",""));
+            //sentenceList.Add(new Q_n_A("remind me wake",""));
+           // sentenceList.Add( new Q_n_A("the weather is sunny",""));
         }
 
         private void talk_textBox_TextChanged(object sender, EventArgs e)
@@ -286,6 +264,32 @@ namespace SmartReminder
                 }
 
             }
+        }
+        String[] read_page_from_web(String PageContent) 
+        {
+            String[] asm_file = PageContent.Split('.', '!', '?');
+            // = new String[tempArray.Count];
+
+          
+
+            return asm_file;
+        
+        }
+        private void button2_Click(object sender, EventArgs e)
+        {
+            String Humanwords = talk_textBox.Text.Trim().ToLower();
+            current_cmd = Humanwords;
+            String WebPageRaw=GetMainContentHelper.getDataFromUrl("http://www.baidu.com/s?wd=" + current_cmd);
+            String extracted = GetMainContentHelper.GetMainContent(WebPageRaw);
+
+            String[] tempFileName = read_page_from_web(extracted);
+            get_string_array_into_arraylist(tempFileName, sentenceList);
+
+            answer = matcher.Match(Humanwords, sentenceList);
+            LatestAnswertextBox.Text = answer;
+
+            cmd_Handler(answer);
+
         }
     }
 }
