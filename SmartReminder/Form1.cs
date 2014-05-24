@@ -96,7 +96,7 @@ namespace SmartReminder
                     alert_time = (time_int-hour_now)*60;
                 }
             }
-            if (time_pattern_match(reminder, hour_later_pattern, 2) != -1)
+            else if (time_pattern_match(reminder, hour_later_pattern, 2) != -1)
             {
                 this.timerClock.Elapsed += new ElapsedEventHandler(OnTimer);
                 this.timerClock.Interval = 1000;
@@ -106,8 +106,7 @@ namespace SmartReminder
                 alert_time = time_int*60*60;
                 this.timerClock.Enabled = true;
             }
-
-            if (time_pattern_match(reminder, min_later_pattern, 3) != -1)
+            else if (time_pattern_match(reminder, min_later_pattern, 3) != -1)
             {
                 this.timerClock.Elapsed += new ElapsedEventHandler(OnTimer);
                 this.timerClock.Interval = 1000;
