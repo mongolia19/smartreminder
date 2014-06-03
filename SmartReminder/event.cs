@@ -13,14 +13,14 @@ namespace SmartReminder
        int TriggerTime;
 
        Event nextEvt;
-       static const string Chat = "Chat";
-       static const string Learn = "Learn";
-       static const string BroadCast = "BroadCast";
-       static const string Sing = "Sing";
-       static const string Reminder = "Reminder";
-       static const string GetAddress = "GetAddress";
-       static const string GetInfor = "GetInfor";
-       static const string SendMail = "SendMail";
+        const string Chat = "Chat";
+        const string Learn = "Learn";
+        const string BroadCast = "BroadCast";
+        const string Sing = "Sing";
+        const string Reminder = "Reminder";
+        const string GetAddress = "GetAddress";
+        const string GetInfor = "GetInfor";
+        const string SendMail = "SendMail";
        public Event(String evt)
         {
             evtType = evt;

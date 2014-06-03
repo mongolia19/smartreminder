@@ -5,6 +5,7 @@ using System;
 using System.Net;
 using System.Text;
 using System.Diagnostics;
+using System.Collections;
 public class GetMainContentHelper
 {
     ///<summary>
@@ -262,5 +263,33 @@ public class GetMainContentHelper
         input = new Regex("\\[p]", RegexOptions.Multiline | RegexOptions.IgnoreCase).Replace(input, "\r\n ");
         input = new Regex("\\[br]", RegexOptions.Multiline | RegexOptions.IgnoreCase).Replace(input, "\r\n");
         return input;
+    }
+    // 提取HTML代码中的网址
+    public static ArrayList GetHyperLinks(string htmlCode)
+    {
+        ArrayList al = new ArrayList();
+
+        string strRegex = @"http://([\w-]+\.)+[\w-]+(/[\w- ./?%&=]*)?";
+
+        Regex r = new Regex(strRegex, RegexOptions.IgnoreCase);
+        MatchCollection m = r.Matches(htmlCode);
+
+        for (int i = 0; i <= m.Count - 1; i++)
+        {
+            bool rep = false;
+            string strNew = m[i].ToString();
+            // 过滤重复的URL
+            foreach (string str in al)
+            {
+                if (strNew == str)
+                {
+                    rep = true;
+                    break;
+                }
+            }
+            if (!rep) al.Add(strNew);
+        }
+        al.Sort();
+        return al;
     }
 }

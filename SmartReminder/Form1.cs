@@ -266,7 +266,7 @@ namespace SmartReminder
         }
         String[] read_page_from_web(String PageContent) 
         {
-            String[] asm_file = PageContent.Split('.', '!', '?');
+            String[] asm_file = PageContent.Split('.', '!', '?',':','-');
             // = new String[tempArray.Count];
 
           
@@ -276,15 +276,29 @@ namespace SmartReminder
         }
         private void button2_Click(object sender, EventArgs e)
         {
+            ArrayList webList = new ArrayList();
+            ArrayList webHyperLinks = new ArrayList();
+
             String Humanwords = talk_textBox.Text.Trim().ToLower();
             current_cmd = Humanwords;
             String WebPageRaw=GetMainContentHelper.getDataFromUrl("http://www.baidu.com/s?wd=" + current_cmd);
-            String extracted = GetMainContentHelper.GetMainContent(WebPageRaw);
+            webHyperLinks = GetMainContentHelper.GetHyperLinks(WebPageRaw);
 
-            String[] tempFileName = read_page_from_web(extracted);
-            get_string_array_into_arraylist(tempFileName, sentenceList);
+           String extracted=null;
 
-            answer = matcher.Match(Humanwords, sentenceList);
+            for (int i = 0; i < webHyperLinks.Count/2; i++)
+            {
+                WebPageRaw = GetMainContentHelper.getDataFromUrl(webHyperLinks[i].ToString());
+                 extracted= GetMainContentHelper.GetMainContent(WebPageRaw);
+                 String[] tempFileName = read_page_from_web(extracted);
+                 get_string_array_into_arraylist(tempFileName, webList);
+            }
+           
+
+            answer = matcher.Match(Humanwords, webList);
+
+            answer = matcher.getRelatedSentences(answer, webList, 0.02);
+            
             LatestAnswertextBox.Text = answer;
 
             cmd_Handler(answer);
