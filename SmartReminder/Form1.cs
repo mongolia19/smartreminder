@@ -29,17 +29,23 @@ namespace SmartReminder
         }
         String cmd_Handler(String cmd)
         {
-            if (cmd.Contains("remind me"))//////remind issues
+            if (cmd != null)
             {
-                StartTimer(cmd);
-                return "finish";
+                if (cmd.Contains("remind me"))//////remind issues
+                {
+                    StartTimer(cmd);
+                    return "finish";
+                }
+                else
+                {
+                    respond_textBox.Text += cmd + " \r\n";
+                    return cmd;
+                }
             }
-            else
+            else 
             {
-                respond_textBox.Text += cmd+" \r\n";
-                return cmd;
+                return "I have no idea!";
             }
-            
         
         
         }
@@ -266,8 +272,12 @@ namespace SmartReminder
         }
         String[] read_page_from_web(String PageContent) 
         {
-            String[] asm_file = PageContent.Split('.', '!', '?',':','-');
+            Regex regex = new Regex("(\r\n)+");
+            PageContent = regex.Replace(PageContent, ".");
+
+            String[] asm_file = PageContent.Split('.', '!', '?',':','-','。','!','?',';');
             // = new String[tempArray.Count];
+            
 
           
 
@@ -276,22 +286,30 @@ namespace SmartReminder
         }
         private void button2_Click(object sender, EventArgs e)
         {
-            ArrayList webList = new ArrayList();
+            ArrayList webList = new ArrayList();////store sentences search from the Web Page
             ArrayList webHyperLinks = new ArrayList();
-
+            ArrayList abstractedList = new ArrayList();
+            String extracted = null;
             String Humanwords = talk_textBox.Text.Trim().ToLower();
             current_cmd = Humanwords;
             String WebPageRaw=GetMainContentHelper.getDataFromUrl("http://www.baidu.com/s?wd=" + current_cmd);
             webHyperLinks = GetMainContentHelper.GetHyperLinks(WebPageRaw);
-
-           String extracted=null;
+            extracted = GetMainContentHelper.GetMainContent(WebPageRaw);
+            String[] firstPageContent = read_page_from_web(extracted);
+            get_string_array_into_arraylist(firstPageContent, webList);
 
             for (int i = 0; i < webHyperLinks.Count/2; i++)
             {
                 WebPageRaw = GetMainContentHelper.getDataFromUrl(webHyperLinks[i].ToString());
                  extracted= GetMainContentHelper.GetMainContent(WebPageRaw);
-                 String[] tempFileName = read_page_from_web(extracted);
-                 get_string_array_into_arraylist(tempFileName, webList);
+             
+                 String[] tempPageContent = read_page_from_web(extracted);
+                  
+                 get_string_array_into_arraylist(tempPageContent, webList);
+
+
+                 webList = abstractor.GetAbstractedFromSentenceList(webList, current_cmd, 0.1);
+
             }
            
 

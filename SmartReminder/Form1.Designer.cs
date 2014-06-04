@@ -60,7 +60,8 @@
             this.respond_textBox.Location = new System.Drawing.Point(12, 12);
             this.respond_textBox.Multiline = true;
             this.respond_textBox.Name = "respond_textBox";
-            this.respond_textBox.Size = new System.Drawing.Size(435, 312);
+            this.respond_textBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.respond_textBox.Size = new System.Drawing.Size(435, 211);
             this.respond_textBox.TabIndex = 2;
             this.respond_textBox.TextChanged += new System.EventHandler(this.respond_textBox_TextChanged);
             // 
@@ -86,10 +87,11 @@
             // 
             // LatestAnswertextBox
             // 
-            this.LatestAnswertextBox.Location = new System.Drawing.Point(12, 330);
+            this.LatestAnswertextBox.Location = new System.Drawing.Point(12, 246);
             this.LatestAnswertextBox.Multiline = true;
             this.LatestAnswertextBox.Name = "LatestAnswertextBox";
-            this.LatestAnswertextBox.Size = new System.Drawing.Size(435, 43);
+            this.LatestAnswertextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.LatestAnswertextBox.Size = new System.Drawing.Size(435, 127);
             this.LatestAnswertextBox.TabIndex = 5;
             // 
             // Form1
