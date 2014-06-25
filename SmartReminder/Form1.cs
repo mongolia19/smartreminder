@@ -275,7 +275,7 @@ namespace SmartReminder
             Regex regex = new Regex("(\r\n)+");
             PageContent = regex.Replace(PageContent, ".");
 
-            String[] asm_file = PageContent.Split('.', '!', '?',':','-','。','!','?',';');
+            String[] asm_file = PageContent.Split('.', '!', '?', ':', '-', '。', '！', '？', ';');
             // = new String[tempArray.Count];
             
 
@@ -299,6 +299,7 @@ namespace SmartReminder
             get_string_array_into_arraylist(firstPageContent, webList);
 
             for (int i = 0; i < webHyperLinks.Count/2; i++)
+           
             {
                 WebPageRaw = GetMainContentHelper.getDataFromUrl(webHyperLinks[i].ToString());
                  extracted= GetMainContentHelper.GetMainContent(WebPageRaw);
@@ -306,9 +307,9 @@ namespace SmartReminder
                  String[] tempPageContent = read_page_from_web(extracted);
                   
                  get_string_array_into_arraylist(tempPageContent, webList);
-
-
-                 webList = abstractor.GetAbstractedFromSentenceList(webList, current_cmd, 0.1);
+                ArrayList extendedList= abstractor.GetAllSentenceContainingWordsInKeySentence(webList, current_cmd);
+                 webList = abstractor.GetRelatedSentencesFromExtendedSentenceList(webList,extendedList );
+                 //webList = abstractor.GetAbstractedFromSentenceList(webList, current_cmd, 0.1);
 
             }
            

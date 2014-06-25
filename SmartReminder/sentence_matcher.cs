@@ -42,7 +42,7 @@ namespace SmartReminder
                 String st = ((Q_n_A)sentence_list[i]).question;
                 if (sentence_relation_measure_cn(PointSentence, st) >= threshold)
                 {
-                    Str2Return += st + " ";
+                    Str2Return += st + ". ";
                 }
                 else 
                 {
