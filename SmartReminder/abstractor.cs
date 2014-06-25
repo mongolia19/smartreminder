@@ -16,9 +16,9 @@ namespace SmartReminder
    public class abstractor
     {
 
-       static void Choice(sentenceWithScore [] list,String keyS)
+       static void ChoiceSort(sentenceWithScore [] list,String keyS)
        {
-          String temp = "";
+           sentenceWithScore temp = null;
            int minIndex = 0;
            for (int i = 0; i < list.GetLength(0); i++)
            {
@@ -26,7 +26,7 @@ namespace SmartReminder
                for (int j = i; j < list.GetLength(0); j++)
                {
                    //注意这里比较的是list[minIndex]
-                   if (ImportanceValueCal( list[j],keyS) < ImportanceValueCal( list[minIndex],keyS))
+                   if (ImportanceValueCal( list[j].sentence,keyS) < ImportanceValueCal( list[minIndex].sentence,keyS))
                    {
                        minIndex = j;
                    }
@@ -61,10 +61,14 @@ namespace SmartReminder
            }
        
        }
-       public static String whatExtractor(String text)
+       public static String whatExtractor(String text,String keySentence)////input text to be extracted output answers to "what" 
        { 
-             text
-       
+           //////////
+             ///first splite the passage
+             ///then mark the sentences with scores 
+             ///then sort them
+             ///get the sentences with the highest score
+             //////
        }
 
        public static ArrayList GetAbstractedFromSentenceList(ArrayList sList,String KeySentence,double threshold) 
