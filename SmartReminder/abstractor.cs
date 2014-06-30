@@ -61,14 +61,47 @@ namespace SmartReminder
            }
        
        }
-       public static String whatExtractor(String text,String keySentence)////input text to be extracted output answers to "what" 
+       public static String whatExtractor(ArrayList text,String keySentence)////input text to be extracted output answers to "what" 
        { 
            //////////
              ///first splite the passage
              ///then mark the sentences with scores 
              ///then sort them
-             ///get the sentences with the highest score
+             ///get the sentences with the highest scores
              //////
+           ArrayList sentenceScore = new ArrayList();
+
+           for (int i = 0; i < text.Count; i++)
+           {
+               sentenceScore.Add( new sentenceWithScore(((Q_n_A)text[i]).question, ImportanceValueCal(((Q_n_A)text[i]).question,keySentence)));
+
+           }
+           for (int j = 0; j < sentenceScore.Count; j++)
+           {
+               if (((sentenceWithScore)sentenceScore[j]).sentence.Contains('是')||((sentenceWithScore)sentenceScore[j]).sentence.Contains('为')||((sentenceWithScore)sentenceScore[j]).sentence.Contains('：'))
+	            {
+                    ((sentenceWithScore)sentenceScore[j]).score = 2*((sentenceWithScore)sentenceScore[j]).score;
+	            }
+                  
+           }
+           sentenceWithScore [] sArray=new sentenceWithScore[sentenceScore.Count];
+
+           for (int k = 0; k < sentenceScore.Count; k++)
+           {
+               sArray[k]=(sentenceWithScore)sentenceScore[k];
+           }
+           ChoiceSort(sArray, keySentence);
+           String extracted = null;
+           for (int m = sArray.GetLength(0)-1; m> sArray.GetLength(0) / 2; m--)
+           {
+               if ((!sArray[m].sentence.Contains("什么")) && (!sArray[m].sentence.Contains("?")) && (!sArray[m].sentence.Contains("吗")) && (!sArray[m].sentence.Contains("是不是")) && (!sArray[m].sentence.Contains("是否")))
+               {
+                   extracted += sArray[m].sentence + ".";
+               }
+             
+
+           }
+           return extracted;
        }
 
        public static ArrayList GetAbstractedFromSentenceList(ArrayList sList,String KeySentence,double threshold) 
@@ -164,7 +197,7 @@ namespace SmartReminder
            }
            //down there we divide the key sentence count rather than the tested sentence length
            //we should see how many key words has been hit rather than the porpotion in the tested sentence
-           return (hitNum / (double)keys.GetLength(0));       
+           return (hitNum *hitNum/ ((double)keys.GetLength(0)*(double)st.Length));       
        }
 
 

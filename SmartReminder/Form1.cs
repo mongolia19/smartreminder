@@ -315,9 +315,11 @@ namespace SmartReminder
            
 
             answer = matcher.Match(Humanwords, webList);
-
             answer = matcher.getRelatedSentences(answer, webList, 0.02);
-            
+            if (abstractor.QuestionClassifierCN(Humanwords)==0) //decide which kind of question this qeustion is
+	        {
+               answer= abstractor.whatExtractor(webList, Humanwords);
+	        }  
             LatestAnswertextBox.Text = answer;
 
             cmd_Handler(answer);
