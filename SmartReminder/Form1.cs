@@ -325,5 +325,11 @@ namespace SmartReminder
             cmd_Handler(answer);
 
         }
+
+        private void ExtractButton_Click(object sender, EventArgs e)
+        {
+            ArrayList secs= Extractor.GetSections(talk_textBox.Text);
+
+        }
     }
 }

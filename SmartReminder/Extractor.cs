@@ -24,12 +24,33 @@ namespace SmartReminder
         }
 
 
-        public static ArrayList GetTitles(String article) 
+        public static ArrayList GetTitles(ArrayList sections) 
         {
-            
 
 
+            return null;
         
         }
+
+
+        public static ArrayList GetSections(String article) 
+        {
+            ArrayList resultList = new ArrayList();
+
+            String[] sentenceArray = article.Split('\r','\n');
+
+            for (int i = 0; i < sentenceArray.GetLength(0); i++)
+            {
+                if (sentenceArray[i].Length != 0)
+                {
+                    resultList.Add(sentenceArray[i]);
+                }
+            }
+
+            return resultList;
+            
+        
+        }
+
     }
 }

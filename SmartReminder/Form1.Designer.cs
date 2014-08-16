@@ -34,6 +34,7 @@
             this.Good_Mark_btn = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.LatestAnswertextBox = new System.Windows.Forms.TextBox();
+            this.ExtractButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // talk_textBox
@@ -94,11 +95,22 @@
             this.LatestAnswertextBox.Size = new System.Drawing.Size(435, 127);
             this.LatestAnswertextBox.TabIndex = 5;
             // 
+            // ExtractButton
+            // 
+            this.ExtractButton.Location = new System.Drawing.Point(564, 386);
+            this.ExtractButton.Name = "ExtractButton";
+            this.ExtractButton.Size = new System.Drawing.Size(105, 107);
+            this.ExtractButton.TabIndex = 6;
+            this.ExtractButton.Text = "talk";
+            this.ExtractButton.UseVisualStyleBackColor = true;
+            this.ExtractButton.Click += new System.EventHandler(this.ExtractButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(924, 505);
+            this.Controls.Add(this.ExtractButton);
             this.Controls.Add(this.LatestAnswertextBox);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.Good_Mark_btn);
@@ -121,6 +133,7 @@
         private System.Windows.Forms.Button Good_Mark_btn;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.TextBox LatestAnswertextBox;
+        private System.Windows.Forms.Button ExtractButton;
     }
 }
 
