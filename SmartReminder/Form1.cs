@@ -328,7 +328,13 @@ namespace SmartReminder
 
         private void ExtractButton_Click(object sender, EventArgs e)
         {
-            ArrayList secs= Extractor.GetSections(talk_textBox.Text);
+            String WebPageRaw = GetMainContentHelper.getDataFromUrl(webLinkTextBox.Text);
+            //webHyperLinks = GetMainContentHelper.GetHyperLinks(WebPageRaw);
+            String extracted = GetMainContentHelper.GetMainContent(WebPageRaw);
+
+
+            ArrayList secs= Extractor.GetSections(extracted);
+            secs=Extractor.GetTitles(secs);
 
         }
     }

@@ -35,6 +35,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.LatestAnswertextBox = new System.Windows.Forms.TextBox();
             this.ExtractButton = new System.Windows.Forms.Button();
+            this.webLinkTextBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // talk_textBox
@@ -97,19 +98,28 @@
             // 
             // ExtractButton
             // 
-            this.ExtractButton.Location = new System.Drawing.Point(564, 386);
+            this.ExtractButton.Location = new System.Drawing.Point(807, 386);
             this.ExtractButton.Name = "ExtractButton";
             this.ExtractButton.Size = new System.Drawing.Size(105, 107);
             this.ExtractButton.TabIndex = 6;
-            this.ExtractButton.Text = "talk";
+            this.ExtractButton.Text = "extract";
             this.ExtractButton.UseVisualStyleBackColor = true;
             this.ExtractButton.Click += new System.EventHandler(this.ExtractButton_Click);
+            // 
+            // webLinkTextBox
+            // 
+            this.webLinkTextBox.Location = new System.Drawing.Point(453, 282);
+            this.webLinkTextBox.Multiline = true;
+            this.webLinkTextBox.Name = "webLinkTextBox";
+            this.webLinkTextBox.Size = new System.Drawing.Size(459, 40);
+            this.webLinkTextBox.TabIndex = 7;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(924, 505);
+            this.Controls.Add(this.webLinkTextBox);
             this.Controls.Add(this.ExtractButton);
             this.Controls.Add(this.LatestAnswertextBox);
             this.Controls.Add(this.button2);
@@ -134,6 +144,7 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.TextBox LatestAnswertextBox;
         private System.Windows.Forms.Button ExtractButton;
+        private System.Windows.Forms.TextBox webLinkTextBox;
     }
 }
 
