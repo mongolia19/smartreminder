@@ -9,9 +9,29 @@ namespace SmartReminder
 {
     class Extractor
     {
+        public static String[] indecatingWords = { "首先", "其次", "最重要", "但是", "然而", "总之" }; 
 
+        public static ArrayList getImportSentenceByIndecatingWords(String[] dic,ArrayList SentenceList) 
+        {
+            ArrayList resultList = new ArrayList();
 
+            for (int i = 0; i < SentenceList.Count; i++)
+            {
+                for (int j = 0; j < dic.GetLength(0); j++)
+                {
+                    if (SentenceList[i].ToString().Contains(dic[j]))
+                    {
+                        resultList.Add(SentenceList[i]);
 
+                    }
+                }
+
+            }
+
+            return resultList;
+
+        
+        }
         public static ArrayList extract(String article)
         {
             ArrayList outputList = new ArrayList();
@@ -61,6 +81,51 @@ namespace SmartReminder
        
             return resultList;
         
+        }
+
+
+        private static int getWordNum(String str)////figure out how many english words in it
+        {
+
+            String pattern = @"(?<Character>[a-zA-Z])";
+            Regex r = new Regex(pattern);
+            MatchCollection mc = r.Matches(str);
+            int strNum = 0;
+            foreach (Match m in mc)
+            {
+                strNum++;
+            }
+            return strNum;
+
+        }
+
+        private static int getDigtNum(String str)////figure out how many digits in it
+        {
+            Regex reg = new Regex(@"[0-9][0-9,.]*");
+            MatchCollection mc = reg.Matches(str);
+            return mc.Count;
+
+        
+        }
+
+        public static void RemoveDetails(ArrayList titleList,String [] pattern)
+        {
+            for (int i = 0; i < titleList.Count; i++)
+			{
+			    if ( getWordNum( titleList[i].ToString())>1||getDigtNum( titleList[i].ToString())>1)
+	            {
+		            titleList.RemoveAt(i);
+                    if (i>0)
+                    {
+                        i--;
+                    }
+             
+	            }
+
+			}
+
+
+
         }
 
 

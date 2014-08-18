@@ -335,6 +335,7 @@ namespace SmartReminder
 
             ArrayList secs= Extractor.GetSections(extracted);
             secs=Extractor.GetTitles(secs);
+            Extractor.RemoveDetails(secs, null);
 
         }
     }
