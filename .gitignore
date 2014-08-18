@@ -24,3 +24,6 @@
 
 *.exe
 *.pdb
+*.cache
+*.suo
+SmartReminder.suo
