@@ -11,6 +11,7 @@ using System.Timers;
 using System.Text.RegularExpressions;
 using System.IO;
 
+
 namespace SmartReminder
 {
     public partial class Form1 : Form
@@ -331,7 +332,12 @@ namespace SmartReminder
             String WebPageRaw = GetMainContentHelper.getDataFromUrl(webLinkTextBox.Text);
             //webHyperLinks = GetMainContentHelper.GetHyperLinks(WebPageRaw);
             String extracted = GetMainContentHelper.GetMainContent(WebPageRaw);
+            String TextForWordFreq=extracted;
+            TextForWordFreq = PreProcessTools.RemovePunctuation(TextForWordFreq);
+            TextForWordFreq = PreProcessTools.RemoveCNStopWords(TextForWordFreq);
 
+            Dictionary<Char, int> Testdic = CharCollector.FnCountWord(TextForWordFreq);
+            
 
             ArrayList secs= Extractor.GetSections(extracted);
             secs=Extractor.GetTitles(secs);
