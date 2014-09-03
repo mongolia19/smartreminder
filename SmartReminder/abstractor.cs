@@ -103,6 +103,33 @@ namespace SmartReminder
            }
            return extracted;
        }
+       public static ArrayList GetContainingStrs(String KeyWords,ArrayList sentences)
+       {
+
+           ArrayList resultArr = new ArrayList();
+           for (int i = 0; i < sentences.Count; i++)
+           {
+               if (sentences[i].ToString().Contains(KeyWords))
+               {
+                   resultArr.Add(sentences[i]);
+               }
+           }
+           return resultArr;
+       
+       }
+       public static ArrayList DefinationExtractor(String KeyWords,ArrayList Patterns ,ArrayList sentences)
+ 
+       {
+           ArrayList resultArr = new ArrayList();
+
+           resultArr = GetContainingStrs(KeyWords, sentences);
+           for (int i = 0; i < Patterns.Count; i++)
+           {
+               resultArr=GetContainingStrs(Patterns[i].ToString(), resultArr);
+           }
+           resultArr
+      
+       }
 
        public static ArrayList GetAbstractedFromSentenceList(ArrayList sList,String KeySentence,double threshold) 
        {
