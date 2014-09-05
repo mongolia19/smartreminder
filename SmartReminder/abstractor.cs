@@ -103,31 +103,45 @@ namespace SmartReminder
            }
            return extracted;
        }
-       public static ArrayList GetContainingStrs(String KeyWords,ArrayList sentences)
+       public static Boolean MatchPattern(String KeyWords,String Patterns,String sentence)//if sentence has words in patterns and keywords at the same time
        {
 
-           ArrayList resultArr = new ArrayList();
-           for (int i = 0; i < sentences.Count; i++)
+           Char[] patternArr = (KeyWords + Patterns).ToCharArray();
+
+           //PatternArr = Patterns;
+           //PatternArr.Add(KeyWords);
+           for (int i = 0; i < patternArr.GetLength(0); i++)
            {
-               if (sentences[i].ToString().Contains(KeyWords))
+               if (!sentence. Contains(Patterns[i].ToString()))
                {
-                   resultArr.Add(sentences[i]);
+                   return false;
                }
            }
-           return resultArr;
+           return true;
+
        
        }
+      
        public static ArrayList DefinationExtractor(String KeyWords,ArrayList Patterns ,ArrayList sentences)
  
        {
            ArrayList resultArr = new ArrayList();
 
-           resultArr = GetContainingStrs(KeyWords, sentences);
-           for (int i = 0; i < Patterns.Count; i++)
-           {
-               resultArr=GetContainingStrs(Patterns[i].ToString(), resultArr);
-           }
-           resultArr
+           for (int i = 0; i < sentences.Count; i++)
+			{
+			    for (int j = 0; j < Patterns.Count; j++)
+			    {
+			        if (MatchPattern(KeyWords,Patterns[j].ToString(),sentences[i].ToString()))
+	                {
+		                resultArr.Add(sentences[i]);
+                        break;
+	                }
+			    }
+
+			}
+
+           return resultArr;
+
       
        }
 

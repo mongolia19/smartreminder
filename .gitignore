@@ -27,3 +27,7 @@
 *.cache
 *.suo
 SmartReminder.suo
+
+# Folders
+SmartReminder/bin/
+SmartReminder/obj/
