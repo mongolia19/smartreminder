@@ -129,7 +129,7 @@ namespace SmartReminder
         }
 
 
-        public static ArrayList GetSections(String article) 
+        public static ArrayList GetSections(String article) //get the article in paragraphs 
         {
             ArrayList resultList = new ArrayList();
 

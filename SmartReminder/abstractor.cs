@@ -106,13 +106,13 @@ namespace SmartReminder
        public static Boolean MatchPattern(String KeyWords,String Patterns,String sentence)//if sentence has words in patterns and keywords at the same time
        {
 
-           Char[] patternArr = (KeyWords + Patterns).ToCharArray();
+           Char[] patternArr = (KeyWords + Patterns).ToCharArray(); // why use char array? for the pattern could be seperated words can't simply use contains 
 
            //PatternArr = Patterns;
            //PatternArr.Add(KeyWords);
            for (int i = 0; i < patternArr.GetLength(0); i++)
            {
-               if (!sentence. Contains(Patterns[i].ToString()))
+               if (!sentence. Contains(patternArr[i].ToString()))
                {
                    return false;
                }
@@ -122,7 +122,7 @@ namespace SmartReminder
        
        }
       
-       public static ArrayList DefinationExtractor(String KeyWords,ArrayList Patterns ,ArrayList sentences)
+       public static ArrayList DefinationExtractor(String KeyWords,ArrayList Patterns ,ArrayList sentences)// extract sentences that have the patterns
  
        {
            ArrayList resultArr = new ArrayList();
@@ -131,7 +131,7 @@ namespace SmartReminder
 			{
 			    for (int j = 0; j < Patterns.Count; j++)
 			    {
-			        if (MatchPattern(KeyWords,Patterns[j].ToString(),sentences[i].ToString()))
+			        if (MatchPattern(KeyWords,Patterns[j].ToString(),((Q_n_A)sentences[i]).question))
 	                {
 		                resultArr.Add(sentences[i]);
                         break;

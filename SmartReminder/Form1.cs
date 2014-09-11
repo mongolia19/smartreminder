@@ -24,6 +24,12 @@ namespace SmartReminder
         private System.Timers.Timer timerClock = new System.Timers.Timer();
         int alert_time;
         String[] Memery;
+        ArrayList DefinationPattern;
+        static String[] DefinitionPattern = { "shi","wei","dingyi"};
+        static String[] MethodPattern = { "shouxian", "qici", "zuihou", "di", "ranhou" };
+        static String[] ResonPattern = { "yinwei", "suoyi", "yinci","yuanyin" };
+        static String[] LocationPattern = { "weiyu", "zaipangbian", "zuoluo", "duiguo" };
+        static String[] TimePattern = { "zao", "wanle", "zaishihou", "dangshihou" };
         public Form1()
         {
             InitializeComponent();
@@ -217,6 +223,12 @@ namespace SmartReminder
             sentenceList = new ArrayList();
             read_all_file_in_dir("D:\\TrainTxt\\",sentenceList);
 
+            DefinationPattern = new ArrayList();
+
+            DefinationPattern.Add("是");
+            DefinationPattern.Add("即");
+            DefinationPattern.Add("定义");
+
             /*            for (int i = 0; i < Memery.GetLength(0); i++)
             {
                 Q_n_A tempq = new Q_n_A(Memery[i].ToString(), "");
@@ -326,6 +338,7 @@ namespace SmartReminder
             cmd_Handler(answer);
 
         }
+        
 
         private void ExtractButton_Click(object sender, EventArgs e)
         {
@@ -337,7 +350,17 @@ namespace SmartReminder
             TextForWordFreq = PreProcessTools.RemoveCNStopWords(TextForWordFreq);
 
             Dictionary<Char, int> Testdic = CharCollector.FnCountWord(TextForWordFreq);
+
+            ArrayList ArticleSentences = new ArrayList();
+            String[] firstPageContent = read_page_from_web(extracted);
+            get_string_array_into_arraylist(firstPageContent, ArticleSentences);
+            ArrayList keys=new ArrayList();
+            foreach (Char k in Testdic.Keys )
+            {
             
+                keys.Add(k.ToString());
+            }
+            ArticleSentences=abstractor.DefinationExtractor(keys[0].ToString(), DefinationPattern, ArticleSentences);
 
             ArrayList secs= Extractor.GetSections(extracted);
             secs=Extractor.GetTitles(secs);
