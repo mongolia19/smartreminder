@@ -25,11 +25,15 @@ namespace SmartReminder
         int alert_time;
         String[] Memery;
         ArrayList DefinationPattern;
-        static String[] DefinitionPattern = { "shi","wei","dingyi"};
-        static String[] MethodPattern = { "shouxian", "qici", "zuihou", "di", "ranhou" };
-        static String[] ResonPattern = { "yinwei", "suoyi", "yinci","yuanyin" };
-        static String[] LocationPattern = { "weiyu", "zaipangbian", "zuoluo", "duiguo" };
-        static String[] TimePattern = { "zao", "wanle", "zaishihou", "dangshihou" };
+        
+        static String[] DefinPattern = { "是", "为", "定义", "所谓" };
+        static String[] MethodPattern = { "首先", "其次", "最后", "第", "然后" };
+        static String[] ReasonPattern = { "因为", "所以", "因此", "原因" };
+        static String[] LocationPattern = { "位于", "在旁", "坐落", "对过", "对面" };
+        static String[] TimePattern = { "早", "晚", "在时候", "当时候" };
+        static String[] Conclusion = { "总之", "综上", "概", "但是", "一句", "总结", "归根", "最后", "无论" };
+        private float ExtractRatio=0.002f;
+        
         public Form1()
         {
             InitializeComponent();
@@ -214,6 +218,7 @@ namespace SmartReminder
             }
 
         }
+        
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -225,10 +230,13 @@ namespace SmartReminder
 
             DefinationPattern = new ArrayList();
 
-            DefinationPattern.Add("是");
-            DefinationPattern.Add("即");
-            DefinationPattern.Add("定义");
 
+            DefinationPattern= PreProcessTools.AddArray2ArrayList(DefinPattern, DefinationPattern);
+            DefinationPattern= PreProcessTools.AddArray2ArrayList(MethodPattern, DefinationPattern);
+            DefinationPattern = PreProcessTools.AddArray2ArrayList(ReasonPattern, DefinationPattern);
+            DefinationPattern = PreProcessTools.AddArray2ArrayList(LocationPattern, DefinationPattern);
+            DefinationPattern = PreProcessTools.AddArray2ArrayList(TimePattern, DefinationPattern);
+            DefinationPattern = PreProcessTools.AddArray2ArrayList(Conclusion, DefinationPattern);
             /*            for (int i = 0; i < Memery.GetLength(0); i++)
             {
                 Q_n_A tempq = new Q_n_A(Memery[i].ToString(), "");
@@ -360,12 +368,25 @@ namespace SmartReminder
             
                 keys.Add(k.ToString());
             }
-            ArticleSentences=abstractor.DefinationExtractor(keys[0].ToString(), DefinationPattern, ArticleSentences);
 
+            ArrayList afterExtract=new ArrayList();
+
+            for (int i = 0; i < keys.Count*ExtractRatio; i++)
+            {
+                afterExtract = abstractor.DefinationExtractor(keys[i].ToString(), DefinationPattern, ArticleSentences, afterExtract);
+
+            }
+            afterExtract = PreProcessTools.RemoveSameObj(afterExtract);
+            
             ArrayList secs= Extractor.GetSections(extracted);
             secs=Extractor.GetTitles(secs);
             Extractor.RemoveDetails(secs, null);
+            LatestAnswertextBox.Text= "";
 
+            for (int i = 0; i < afterExtract.Count; i++)
+            {
+                LatestAnswertextBox.Text += ((Q_n_A)afterExtract[i]).question;
+            }
         }
     }
 }

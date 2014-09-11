@@ -122,10 +122,10 @@ namespace SmartReminder
        
        }
       
-       public static ArrayList DefinationExtractor(String KeyWords,ArrayList Patterns ,ArrayList sentences)// extract sentences that have the patterns
+       public static ArrayList DefinationExtractor(String KeyWords,ArrayList Patterns ,ArrayList sentences,ArrayList outputList)// extract sentences that have the patterns
  
        {
-           ArrayList resultArr = new ArrayList();
+//           ArrayList resultArr = new ArrayList();
 
            for (int i = 0; i < sentences.Count; i++)
 			{
@@ -133,14 +133,14 @@ namespace SmartReminder
 			    {
 			        if (MatchPattern(KeyWords,Patterns[j].ToString(),((Q_n_A)sentences[i]).question))
 	                {
-		                resultArr.Add(sentences[i]);
+		                outputList.Add(sentences[i]);
                         break;
 	                }
 			    }
 
 			}
 
-           return resultArr;
+           return outputList;
 
       
        }

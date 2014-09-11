@@ -24,3 +24,4 @@ D:\Users\MeAndroid\Documents\GitHub\smartreminder\SmartReminder\obj\x86\Debug\Sm
 D:\Users\MeAndroid\Documents\GitHub\smartreminder\SmartReminder\obj\x86\Debug\GenerateResource.read.1.tlog
 D:\Users\MeAndroid\Documents\GitHub\smartreminder\SmartReminder\obj\x86\Debug\GenerateResource.write.1.tlog
 F:\Users\Android\Documents\GitHub\smartreminder\SmartReminder\obj\x86\Debug\SmartReminder.csprojResolveAssemblyReference.cache
+D:\Users\MeAndroid\Documents\GitHub\smartreminder\SmartReminder\bin\Debug\SmartReminder.exe.config

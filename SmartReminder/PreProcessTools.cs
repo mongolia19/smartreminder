@@ -67,7 +67,31 @@ namespace SmartReminder
 
         }
 
+        public static ArrayList AddArray2ArrayList(String[] StrArr, ArrayList list)
+        {
 
+            for (int i = 0; i < StrArr.GetLength(0); i++)
+            {
+                list.Add(StrArr[i]);
+            }
+            return list;
+
+        }
+
+        public static ArrayList RemoveSameObj(ArrayList former) 
+        {
+            ArrayList al_New=new ArrayList();
+             
+            foreach (object a in former)
+            {
+                if (!al_New.Contains(a))
+                {
+                    al_New.Add(a);
+                }
+            }
+            return al_New;
+        
+        }
 
 
     }
