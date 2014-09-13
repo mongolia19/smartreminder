@@ -144,6 +144,23 @@ namespace SmartReminder
 
       
        }
+       public static ArrayList DetailPatternRemover(ArrayList Patterns,ArrayList sentences)///remove details
+       {
+           ArrayList resultList = new ArrayList();
+           for (int i = 0; i < sentences.Count; i++)
+           {
+               for (int j = 0; j < Patterns.Count; j++)
+               {
+                   if (!MatchPattern("", Patterns[j].ToString(), ((Q_n_A)sentences[i]).question)) 
+                   {
+                       resultList.Add(sentences[i]);
+                   }
+               }
+
+           }
+           return resultList;
+       
+       }
 
        public static ArrayList GetAbstractedFromSentenceList(ArrayList sList,String KeySentence,double threshold) 
        {

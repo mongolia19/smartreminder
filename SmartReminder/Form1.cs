@@ -371,7 +371,7 @@ namespace SmartReminder
 
             ArrayList afterExtract=new ArrayList();
 
-            for (int i = 0; i < keys.Count*ExtractRatio; i++)
+            for (int i = 0; i < 6; i++)
             {
                 afterExtract = abstractor.DefinationExtractor(keys[i].ToString(), DefinationPattern, ArticleSentences, afterExtract);
 
@@ -385,7 +385,7 @@ namespace SmartReminder
 
             for (int i = 0; i < afterExtract.Count; i++)
             {
-                LatestAnswertextBox.Text += ((Q_n_A)afterExtract[i]).question;
+                LatestAnswertextBox.Text += ((Q_n_A)afterExtract[i]).question+".";
             }
         }
     }
