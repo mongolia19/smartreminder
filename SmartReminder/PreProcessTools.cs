@@ -12,7 +12,7 @@ namespace SmartReminder
         static String[] PunctuationList = { "?", "。", "，", "：", "“", "“", "”", "？", "," ,"\r","\n"," ","、","/"};
 
 
-        static String[] CNStopWords = { "我", "你", "的", "得", "这", "那", "他", "是", "为","在","了" ,"有","就","到","个","不","否"};
+        static String[] CNStopWords = { "我", "你", "的", "得", "这", "那", "他", "是", "为","在","了" ,"有","就","到","个","不","否","也","还","以","一","人","但"};
 
         public static ArrayList CombineArrayLists(ArrayList a, ArrayList b) 
         {
@@ -93,6 +93,23 @@ namespace SmartReminder
         
         }
 
+
+       
+          public static ArrayList removeDuplicate(ArrayList list) {
+            for (int i = 0; i < list.Count - 1; i++) 
+            {
+                for (int j = list.Count - 1; j > i; j--) 
+                {
+                    if (((Q_n_A)list[j]).question.Equals(((Q_n_A)list[i]).question))
+                    {
+                         list.RemoveAt(j);
+                    }
+                 }
+            }
+              return list;
+
+//            System.out.println(list);
+            }
 
     }
 }

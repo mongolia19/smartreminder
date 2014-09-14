@@ -26,7 +26,7 @@ namespace SmartReminder
         String[] Memery;
         ArrayList DefinationPattern;
         
-        static String[] DefinPattern = { "是", "为", "定义", "所谓" };
+        static String[] DefinPattern = { "是的", "为的", "定义是", "所谓是" };
         static String[] MethodPattern = { "首先", "其次", "最后", "第", "然后" };
         static String[] ReasonPattern = { "因为", "所以", "因此", "原因" };
         static String[] LocationPattern = { "位于", "在旁", "坐落", "对过", "对面" };
@@ -369,6 +369,31 @@ namespace SmartReminder
                 keys.Add(k.ToString());
             }
 
+            for (int i = 0; i < keys.Count; i++)//only keep Chinese charactors
+			{
+			  Regex rx = new Regex("^[\u4e00-\u9fa5]$");
+              if (rx.IsMatch(keys[i].ToString()))
+              {
+
+              }
+              // 是
+              else
+              {
+
+                  keys.RemoveAt(i);
+                  if (i>0)
+                  {
+                      i--;
+                  }
+              }
+                // 否
+			}
+            int MaxBase =Testdic[((keys[0]).ToString().ToCharArray())[0]];//the count of most frequect word
+            Double[] weightArray= abstractor.weight(Testdic, ArticleSentences, MaxBase);
+            Double r= 0.1;
+            int[] selected = abstractor.GetHighestScoreIndex(weightArray,Convert.ToInt32( r*weightArray.GetLength(0)));
+
+
             ArrayList afterExtract=new ArrayList();
 
             for (int i = 0; i < 6; i++)
@@ -376,17 +401,28 @@ namespace SmartReminder
                 afterExtract = abstractor.DefinationExtractor(keys[i].ToString(), DefinationPattern, ArticleSentences, afterExtract);
 
             }
-            afterExtract = PreProcessTools.RemoveSameObj(afterExtract);
+            afterExtract = PreProcessTools.removeDuplicate(afterExtract);
+
+//          afterExtract = PreProcessTools.RemoveSameObj(afterExtract);
             
             ArrayList secs= Extractor.GetSections(extracted);
             secs=Extractor.GetTitles(secs);
             Extractor.RemoveDetails(secs, null);
             LatestAnswertextBox.Text= "";
 
-            for (int i = 0; i < afterExtract.Count; i++)
+            //for (int i = 0; i < afterExtract.Count; i++)
+            //{
+                
+            //    LatestAnswertextBox.Text += ((Q_n_A)afterExtract[i]).question+".";
+            //}
+
+
+            for (int i = 0; i <selected.GetLength(0); i++)
             {
-                LatestAnswertextBox.Text += ((Q_n_A)afterExtract[i]).question+".";
+                LatestAnswertextBox.Text += ((Q_n_A)ArticleSentences[selected[i]]).question+".";
             }
+
+
         }
     }
 }

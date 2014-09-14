@@ -15,7 +15,73 @@ namespace SmartReminder
     /// </summary>
    public class abstractor
     {
+       public static int[] GetHighestScoreIndex(Double [] allIndex,int ChosenNum) 
+       {
+           ArrayList tempList = new ArrayList();
 
+           for (int i = 0; i < ChosenNum; i++)
+           {
+               tempList.Add("0");
+               
+           }
+           for (int i = 0; i < allIndex.GetLength(0); i++)
+           {
+               int t = GetSmallestIndex(tempList);
+               if (allIndex[i]>Convert.ToDouble ( tempList[t].ToString()))
+               {
+                   tempList.RemoveAt(t);
+                   tempList.Add(i);
+               }
+           }
+           int[] reArray = new int[tempList.Count];
+
+           for (int i = 0; i < tempList.Count; i++)
+           {
+               reArray[i] = Convert.ToInt32(tempList[i].ToString());
+    
+           }
+           return reArray;
+       }
+
+       static int GetSmallestIndex(ArrayList list)
+       {
+           int s=0;
+           Double tempS=Convert.ToDouble(list[0].ToString());
+           for (int i = 0; i < list.Count; i++)
+           {
+               if (Convert.ToDouble( list[i].ToString())<Convert.ToDouble ( tempS.ToString()))
+               {
+                   s=i;
+                   tempS=Convert.ToDouble( list[i].ToString());
+
+               }
+           }
+           return s;
+
+       
+       }
+
+       public static Double[] weight(Dictionary<Char,int> dic,ArrayList sentences,int BaseCount) 
+       {
+           Double[] weight = new Double[sentences.Count];
+           for (int i = 0; i < sentences.Count; i++)
+           {
+               String tempStr = ((Q_n_A)sentences[i]).question;
+               int ValidWordCount = 0;
+               Double score = 0;
+               for (int j = 0; j < tempStr.Length; j++)
+               {
+                   if (dic.ContainsKey(tempStr[j]))
+                   {
+                       ValidWordCount++;
+                       score += dic[tempStr[j]]/BaseCount;
+                   }
+               }
+               weight[i] = score / (ValidWordCount+1);
+           }
+           return weight;
+       
+       }
        static void ChoiceSort(sentenceWithScore [] list,String keyS)
        {
            sentenceWithScore temp = null;
