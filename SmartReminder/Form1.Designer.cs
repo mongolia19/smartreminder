@@ -36,6 +36,7 @@
             this.LatestAnswertextBox = new System.Windows.Forms.TextBox();
             this.ExtractButton = new System.Windows.Forms.Button();
             this.webLinkTextBox = new System.Windows.Forms.TextBox();
+            this.HeadLineText = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // talk_textBox
@@ -114,11 +115,21 @@
             this.webLinkTextBox.Size = new System.Drawing.Size(459, 40);
             this.webLinkTextBox.TabIndex = 7;
             // 
+            // HeadLineText
+            // 
+            this.HeadLineText.Location = new System.Drawing.Point(467, 12);
+            this.HeadLineText.Multiline = true;
+            this.HeadLineText.Name = "HeadLineText";
+            this.HeadLineText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.HeadLineText.Size = new System.Drawing.Size(435, 211);
+            this.HeadLineText.TabIndex = 8;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(924, 505);
+            this.Controls.Add(this.HeadLineText);
             this.Controls.Add(this.webLinkTextBox);
             this.Controls.Add(this.ExtractButton);
             this.Controls.Add(this.LatestAnswertextBox);
@@ -145,6 +156,7 @@
         private System.Windows.Forms.TextBox LatestAnswertextBox;
         private System.Windows.Forms.Button ExtractButton;
         private System.Windows.Forms.TextBox webLinkTextBox;
+        private System.Windows.Forms.TextBox HeadLineText;
     }
 }
 

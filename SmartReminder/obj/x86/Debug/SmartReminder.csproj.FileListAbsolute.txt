@@ -25,3 +25,6 @@ F:\Users\Android\Documents\GitHub\smartreminder\SmartReminder\obj\x86\Debug\Smar
 F:\Users\Android\Documents\GitHub\smartreminder\SmartReminder\obj\x86\Debug\SmartReminder.pdb
 F:\Users\Android\Documents\GitHub\smartreminder\SmartReminder\obj\x86\Debug\SmartReminder.csprojResolveAssemblyReference.cache
 F:\Users\Android\Documents\GitHub\smartreminder\SmartReminder\bin\Debug\SmartReminder.exe.config
+D:\Users\MeAndroid\Documents\GitHub\smartreminder\SmartReminder\bin\Debug\SmartReminder.exe.config
+D:\Users\MeAndroid\Documents\GitHub\smartreminder\SmartReminder\obj\x86\Debug\GenerateResource-ResGen.read.1.tlog
+D:\Users\MeAndroid\Documents\GitHub\smartreminder\SmartReminder\obj\x86\Debug\GenerateResource-ResGen.write.1.tlog

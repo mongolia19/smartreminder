@@ -368,10 +368,25 @@ namespace SmartReminder
             
                 keys.Add(k.ToString());
             }
+            Regex rx = new Regex("^[\u4e00-\u9fa5]$");
 
+           
+                 if (rx.IsMatch(keys[0].ToString()))
+              {
+
+              }
+              // 是
+              else
+              {
+
+                  keys.RemoveAt(0);
+                 
+                
+              }
+            
             for (int i = 0; i < keys.Count; i++)//only keep Chinese charactors
 			{
-			  Regex rx = new Regex("^[\u4e00-\u9fa5]$");
+			 
               if (rx.IsMatch(keys[i].ToString()))
               {
 
@@ -381,10 +396,11 @@ namespace SmartReminder
               {
 
                   keys.RemoveAt(i);
-                  if (i>0)
+                  if (i > 0)
                   {
                       i--;
                   }
+                
               }
                 // 否
 			}
@@ -411,6 +427,17 @@ namespace SmartReminder
 
             }
 
+
+
+
+            int[] TotalArticle = new int[ArticleSentences.Count];
+
+            TotalArticle=PreProcessTools.MarkIntArray(selected, TotalArticle);
+
+            HeadLineText.Text = AddSentencesTogether(TotalArticle, ArticleSentences);
+
+            TotalArticle = PreProcessTools.MarkIntArray(selectedMoreDetail, TotalArticle);
+
             //afterExtract = PreProcessTools.removeDuplicate(afterExtract);
 
 //          afterExtract = PreProcessTools.RemoveSameObj(afterExtract);
@@ -426,13 +453,27 @@ namespace SmartReminder
            //    LatestAnswertextBox.Text += ((Q_n_A)afterExtract[i]).question + ".\r\n";
            //}
 
+            LatestAnswertextBox.Text = AddSentencesTogether(TotalArticle, ArticleSentences);
+            
 
-            for (int i = 0; i <selected.GetLength(0); i++)
+
+        }
+
+        static String AddSentencesTogether(int[] IndexArray,ArrayList article) 
+        {
+            String tempStr="";
+            for (int i = 0; i < IndexArray.GetLength(0); i++)
             {
-                LatestAnswertextBox.Text += ((Q_n_A)ArticleSentences[selected[i]]).question+".\r\n";
+                if (IndexArray[i] == 1)
+                {
+                    tempStr += ((Q_n_A)article[i]).question + ".\r\n";
+                }
+
             }
+            return tempStr;
 
 
+        
         }
     }
 }
