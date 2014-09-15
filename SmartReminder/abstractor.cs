@@ -187,7 +187,25 @@ namespace SmartReminder
 
        
        }
-      
+       public static ArrayList DefinationExtractorReturnIndex(String KeyWords, ArrayList Patterns, ArrayList sentences, ArrayList outputList)// extract sentences that have the patterns
+
+       {
+          
+           for (int i = 0; i < sentences.Count; i++)
+           {
+               for (int j = 0; j < Patterns.Count; j++)
+               {
+                   if (MatchPattern(KeyWords, Patterns[j].ToString(), ((Q_n_A)sentences[i]).question))
+                   {
+                       outputList.Add(i);
+                       break;
+                   }
+               }
+
+           }
+           return outputList;
+       
+       }
        public static ArrayList DefinationExtractor(String KeyWords,ArrayList Patterns ,ArrayList sentences,ArrayList outputList)// extract sentences that have the patterns
  
        {
@@ -245,7 +263,7 @@ namespace SmartReminder
        }
        public static String[] simpleSentenceSplitor(String passage) 
        {
-          return passage.Split('.', '!', '?', ':', '-', '。', '！', '？', ';');
+          return passage.Split('.', '!', '?', ':', '-', '。', '！', '？', ';','；');
 
 
                 

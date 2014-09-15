@@ -395,13 +395,23 @@ namespace SmartReminder
 
 
             ArrayList afterExtract=new ArrayList();
-
+            
             for (int i = 0; i < 6; i++)
             {
-                afterExtract = abstractor.DefinationExtractor(keys[i].ToString(), DefinationPattern, ArticleSentences, afterExtract);
+                afterExtract = abstractor.DefinationExtractorReturnIndex(keys[i].ToString(), DefinationPattern, ArticleSentences, afterExtract);
+                //afterExtract = abstractor.DefinationExtractor(keys[i].ToString(), DefinationPattern, ArticleSentences, afterExtract);
 
             }
-            afterExtract = PreProcessTools.removeDuplicate(afterExtract);
+
+            int [] selectedMoreDetail=new int[afterExtract.Count];
+
+            for (int i = 0; i < afterExtract.Count; i++)
+            {
+                selectedMoreDetail[i] = Convert.ToInt32(afterExtract[i].ToString());
+
+            }
+
+            //afterExtract = PreProcessTools.removeDuplicate(afterExtract);
 
 //          afterExtract = PreProcessTools.RemoveSameObj(afterExtract);
             
@@ -410,16 +420,16 @@ namespace SmartReminder
             Extractor.RemoveDetails(secs, null);
             LatestAnswertextBox.Text= "";
 
-            //for (int i = 0; i < afterExtract.Count; i++)
-            //{
-                
-            //    LatestAnswertextBox.Text += ((Q_n_A)afterExtract[i]).question+".";
-            //}
+           //for (int i = 0; i < afterExtract.Count; i++)
+           //{
+
+           //    LatestAnswertextBox.Text += ((Q_n_A)afterExtract[i]).question + ".\r\n";
+           //}
 
 
             for (int i = 0; i <selected.GetLength(0); i++)
             {
-                LatestAnswertextBox.Text += ((Q_n_A)ArticleSentences[selected[i]]).question+".";
+                LatestAnswertextBox.Text += ((Q_n_A)ArticleSentences[selected[i]]).question+".\r\n";
             }
 
 
