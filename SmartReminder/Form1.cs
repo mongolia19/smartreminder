@@ -351,6 +351,12 @@ namespace SmartReminder
         private void ExtractButton_Click(object sender, EventArgs e)
         {
             String WebPageRaw = GetMainContentHelper.getDataFromUrl(webLinkTextBox.Text);
+            Match TitleMatch = Regex.Match(WebPageRaw, "<title>([^<]*)</title>", RegexOptions.IgnoreCase | RegexOptions.Multiline);
+            String title = TitleMatch.Groups[1].Value;
+
+            title = PreProcessTools.RemovePunctuation(title);
+            title = PreProcessTools.RemoveCNStopWords(title);
+
             //webHyperLinks = GetMainContentHelper.GetHyperLinks(WebPageRaw);
             String extracted = GetMainContentHelper.GetMainContent(WebPageRaw);
             String TextForWordFreq=extracted;
@@ -363,6 +369,10 @@ namespace SmartReminder
             String[] firstPageContent = read_page_from_web(extracted);
             get_string_array_into_arraylist(firstPageContent, ArticleSentences);
             ArrayList keys=new ArrayList();
+
+
+            /////////////////
+            //////Remove english words and numbers in key words
             foreach (Char k in Testdic.Keys )
             {
             
@@ -417,6 +427,11 @@ namespace SmartReminder
                 afterExtract = abstractor.DefinationExtractorReturnIndex(keys[i].ToString(), DefinationPattern, ArticleSentences, afterExtract);
                 //afterExtract = abstractor.DefinationExtractor(keys[i].ToString(), DefinationPattern, ArticleSentences, afterExtract);
 
+            }
+
+            for (int i = 0; i < title.Length; i++)
+            {
+                afterExtract = abstractor.DefinationExtractorReturnIndex(title[i].ToString(), DefinationPattern, ArticleSentences, afterExtract);
             }
 
             int [] selectedMoreDetail=new int[afterExtract.Count];
