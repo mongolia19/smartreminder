@@ -10,4 +10,7 @@
     <FallbackCulture>zh-CN</FallbackCulture>
     <VerifyUploadedFiles>false</VerifyUploadedFiles>
   </PropertyGroup>
+  <PropertyGroup>
+    <ReferencePath>F:\Users\Android\Documents\GitHub\smartreminder\SmartReminder\Net35\</ReferencePath>
+  </PropertyGroup>
 </Project>

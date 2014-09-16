@@ -234,8 +234,8 @@ namespace SmartReminder
             DefinationPattern= PreProcessTools.AddArray2ArrayList(DefinPattern, DefinationPattern);
             DefinationPattern= PreProcessTools.AddArray2ArrayList(MethodPattern, DefinationPattern);
             DefinationPattern = PreProcessTools.AddArray2ArrayList(ReasonPattern, DefinationPattern);
-            DefinationPattern = PreProcessTools.AddArray2ArrayList(LocationPattern, DefinationPattern);
-            DefinationPattern = PreProcessTools.AddArray2ArrayList(TimePattern, DefinationPattern);
+            //DefinationPattern = PreProcessTools.AddArray2ArrayList(LocationPattern, DefinationPattern);
+            //DefinationPattern = PreProcessTools.AddArray2ArrayList(TimePattern, DefinationPattern);
             DefinationPattern = PreProcessTools.AddArray2ArrayList(Conclusion, DefinationPattern);
             /*            for (int i = 0; i < Memery.GetLength(0); i++)
             {
@@ -359,70 +359,76 @@ namespace SmartReminder
 
             //webHyperLinks = GetMainContentHelper.GetHyperLinks(WebPageRaw);
             String extracted = GetMainContentHelper.GetMainContent(WebPageRaw);
-            String TextForWordFreq=extracted;
+
+            String SplitedWords = abstractor.Segment(extracted);
+
+           // ArrayList sortedList = CharCollector.WordFreqStatistic(SplitedWords);
+
+            String TextForWordFreq=SplitedWords;
             TextForWordFreq = PreProcessTools.RemovePunctuation(TextForWordFreq);
             TextForWordFreq = PreProcessTools.RemoveCNStopWords(TextForWordFreq);
 
-            Dictionary<Char, int> Testdic = CharCollector.FnCountWord(TextForWordFreq);
+           // Dictionary<Char, int> Testdic = CharCollector.FnCountWord(TextForWordFreq);
+            Dictionary<String, int> Testdic = PreProcessTools.Stats(TextForWordFreq);
 
             ArrayList ArticleSentences = new ArrayList();
             String[] firstPageContent = read_page_from_web(extracted);
             get_string_array_into_arraylist(firstPageContent, ArticleSentences);
+            
+            
             ArrayList keys=new ArrayList();
-
-
             /////////////////
             //////Remove english words and numbers in key words
-            foreach (Char k in Testdic.Keys )
+            foreach (String k in Testdic.Keys )
             {
             
                 keys.Add(k.ToString());
             }
-            Regex rx = new Regex("^[\u4e00-\u9fa5]$");
+            //Regex rx = new Regex("^[\u4e00-\u9fa5]$");
 
            
-                 if (rx.IsMatch(keys[0].ToString()))
-              {
+            //     if (rx.IsMatch(keys[0].ToString()))
+            //  {
 
-              }
-              // 是
-              else
-              {
+            //  }
+            //  // 是
+            //  else
+            //  {
 
-                  keys.RemoveAt(0);
+            //      keys.RemoveAt(0);
                  
                 
-              }
+            //  }
             
-            for (int i = 0; i < keys.Count; i++)//only keep Chinese charactors
-			{
+            //for (int i = 0; i < keys.Count; i++)//only keep Chinese charactors
+            //{
 			 
-              if (rx.IsMatch(keys[i].ToString()))
-              {
+            //  if (rx.IsMatch(keys[i].ToString()))
+            //  {
 
-              }
-              // 是
-              else
-              {
+            //  }
+            //  // 是
+            //  else
+            //  {
 
-                  keys.RemoveAt(i);
-                  if (i > 0)
-                  {
-                      i--;
-                  }
+            //      keys.RemoveAt(i);
+            //      if (i > 0)
+            //      {
+            //          i--;
+            //      }
                 
-              }
-                // 否
-			}
-            int MaxBase =Testdic[((keys[0]).ToString().ToCharArray())[0]];//the count of most frequect word
-            Double[] weightArray= abstractor.weight(Testdic, ArticleSentences, MaxBase);
-            Double r= 0.1;
+            //  }
+            //    // 否
+            //}
+            int MaxBase =Testdic[keys[0].ToString()];//the count of most frequect word
+            Double[] weightArray= abstractor.weight(Testdic, ArticleSentences);
+            Double r= 0.05;
             int[] selected = abstractor.GetHighestScoreIndex(weightArray,Convert.ToInt32( r*weightArray.GetLength(0)));
 
 
             ArrayList afterExtract=new ArrayList();
             
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < r*ArticleSentences.Count; i++)
             {
                 afterExtract = abstractor.DefinationExtractorReturnIndex(keys[i].ToString(), DefinationPattern, ArticleSentences, afterExtract);
                 //afterExtract = abstractor.DefinationExtractor(keys[i].ToString(), DefinationPattern, ArticleSentences, afterExtract);
@@ -447,7 +453,7 @@ namespace SmartReminder
 
             int[] TotalArticle = new int[ArticleSentences.Count];
 
-            TotalArticle=PreProcessTools.MarkIntArray(selected, TotalArticle);
+           TotalArticle=PreProcessTools.MarkIntArray(selected, TotalArticle);
 
             HeadLineText.Text = AddSentencesTogether(TotalArticle, ArticleSentences);
 
@@ -469,11 +475,27 @@ namespace SmartReminder
            //}
 
             LatestAnswertextBox.Text = AddSentencesTogether(TotalArticle, ArticleSentences);
-            
+
+
+            CreateHtml(title, LatestAnswertextBox.Text, "");
 
 
         }
+        static void CreateHtml(String title,String body,String file_path)
+        {
+            FileStream fs = new FileStream("Extracted.html", FileMode.Create);
+            StreamWriter sw = new StreamWriter(fs, Encoding.Default);
 
+            String FirstPart = "<HTML><HEAD><meta http-equiv=Content-Type content=\"text/html;charset=gb2312\"><TITLE>";
+            String MidPart = "</TITLE></HEAD><BODY bgcolor='yellow' style='color:red'>";
+            String LastPart = "</BODY></HTML> ";
+            String Whole = FirstPart + title + MidPart + body + LastPart;
+                sw.Write(Whole);  //这里是写入的内容
+                sw.Flush();
+                sw.Close();
+                fs.Close();
+
+        }
         static String AddSentencesTogether(int[] IndexArray,ArrayList article) 
         {
             String tempStr="";

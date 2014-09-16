@@ -15,6 +15,55 @@ namespace SmartReminder
     /// </summary>
    public class abstractor
     {
+
+        /// 利用SCWS进行中文分词
+        /// 1638988@gmail.com
+        /// </summary>
+        /// <param name="str">需要分词的字符串</param>
+        /// <returns>用空格分开的分词结果</returns>
+        public static string Segment(string str)
+        {
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            try
+            {
+                string s = string.Empty;
+                System.Net.CookieContainer cookieContainer = new System.Net.CookieContainer();
+                // 将提交的字符串数据转换成字节数组           
+                byte[] postData = System.Text.Encoding.ASCII.GetBytes("data=" + System.Web.HttpUtility.UrlEncode(str) + "&respond=json&charset=utf8&ignore=yes&duality=no&traditional=no&multi=0");
+
+                // 设置提交的相关参数
+                System.Net.HttpWebRequest request = System.Net.WebRequest.Create("http://www.ftphp.com/scws/api.php") as System.Net.HttpWebRequest;
+                request.Method = "POST";
+                request.KeepAlive = false;
+                request.ContentType = "application/x-www-form-urlencoded";
+                request.CookieContainer = cookieContainer;
+                request.ContentLength = postData.Length;
+
+                // 提交请求数据
+                System.IO.Stream outputStream = request.GetRequestStream();
+                outputStream.Write(postData, 0, postData.Length);
+                outputStream.Close();
+
+                // 接收返回的页面
+                System.Net.HttpWebResponse response = request.GetResponse() as System.Net.HttpWebResponse;
+                System.IO.Stream responseStream = response.GetResponseStream();
+                System.IO.StreamReader reader = new System.IO.StreamReader(responseStream, System.Text.Encoding.GetEncoding("utf-8"));
+                string val = reader.ReadToEnd();
+
+                Newtonsoft.Json.Linq.JObject results = Newtonsoft.Json.Linq.JObject.Parse(val);
+                foreach (var item in results["words"].Children())
+                {
+                    Newtonsoft.Json.Linq.JObject word = Newtonsoft.Json.Linq.JObject.Parse(item.ToString());
+                    sb.Append(word["word"].ToString() + " ");
+                }
+            }
+            catch
+            {
+            }
+
+            return sb.ToString();
+        }
+
        public static int[] GetHighestScoreIndex(Double [] allIndex,int ChosenNum) 
        {
            ArrayList tempList = new ArrayList();
@@ -61,26 +110,38 @@ namespace SmartReminder
        
        }
 
-       public static Double[] weight(Dictionary<Char,int> dic,ArrayList sentences,int BaseCount) 
+       public static Double[] weight(Dictionary<String, int> dic, ArrayList sentences)
        {
+
            Double[] weight = new Double[sentences.Count];
+           ArrayList keys = new ArrayList();
+           /////////////////
+           //////Remove english words and numbers in key words
+           foreach (String k in dic.Keys)
+           {
+
+               keys.Add(k.ToString());
+           }
+
+           int BaseCount = dic[keys[0].ToString()];
+
            for (int i = 0; i < sentences.Count; i++)
            {
                String tempStr = ((Q_n_A)sentences[i]).question;
                int ValidWordCount = 0;
                Double score = 0;
-               for (int j = 0; j < tempStr.Length; j++)
+               for (int j = 0; j < keys.Count; j++)
                {
-                   if (dic.ContainsKey(tempStr[j]))
+                   if (tempStr.Contains(keys[j].ToString()))
                    {
                        ValidWordCount++;
-                       score += dic[tempStr[j]]/BaseCount;
+                       score += dic[keys[j].ToString()] / BaseCount;
                    }
                }
-               weight[i] = score / (ValidWordCount+1);
+               weight[i] = score / (ValidWordCount + 1);
            }
            return weight;
-       
+
        }
        static void ChoiceSort(sentenceWithScore [] list,String keyS)
        {

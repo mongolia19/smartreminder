@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Collections;
+using System.Text.RegularExpressions;
 
 namespace SmartReminder
 {
@@ -14,8 +15,39 @@ namespace SmartReminder
         static String[] PunctuationList = { "?", "。", "，", "：", "“", "“", "”", "？", "," ,"\r","\n"," ","、","/"};
 
 
-        static String[] CNStopWords = { "我", "你", "的", "得", "这", "那", "他", "是", "为","在","了" ,"有","就","到","个","不","否","也","还","以","一","人","但","要","把","拿","用","靠","中","出现","来","它","们","最","可","于"};
+        static String[] CNStopWords = { "我", "你", "的", "得", "这", "那", "他", "是", "为", "在", "了", "有", "就", "到", "个", "不", "否", "也", "还", "以", "一", "人", "但", "要", "把", "用", "靠", "中", "出现", "来", "它", "们", "最", "可", "于", "和", "等" };
 
+
+      public static Dictionary<String,int> Stats(String article)
+        {
+            MatchCollection mc = Regex.Matches(article, @"\b\w+\b");
+           // Response.Write("总数：" + mc.Count + "<br/>");
+            Dictionary<String, int> dct = new Dictionary<String, int>(mc.Count);
+            foreach (Match mt in mc)
+            {
+                if (dct.ContainsKey(mt.Value))
+                {
+                    dct[mt.Value]++;
+                }
+                else
+                {
+                    dct.Add(mt.Value, 1);
+                }
+            }
+            //dct = dct.OrderBy(i => i.Key).ToDictionary(c => c.Key, c => c.Value);
+
+            dct = (from entry in dct
+                        orderby entry.Value descending
+                        select entry).ToDictionary(pair => pair.Key, pair => pair.Value);
+            return dct;
+
+            ////输出结果
+            //foreach (KeyValuePair<String, int> de in dct)
+            //{
+            //    Response.Write(de.Key + ":" + de.Value + "<br/>");
+            //    //换成Writeline输出，如果是WinForm
+            //}
+        }
 
         public static int[] MarkIntArray(int[] marker,int [] marked) //Mark the selected sentences
         {
@@ -57,7 +89,7 @@ namespace SmartReminder
             {
                 if (RawText.Contains(PunctuationList[i]))
                 {
-                    RawText = RawText.Replace(PunctuationList[i],"");
+                    RawText = RawText.Replace(PunctuationList[i]," ");
 
                 }
             }

@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Collections;
+using System.Text.RegularExpressions;
 
 namespace SmartReminder
 {
     class CharCollector
     {
 
-        
+      
 
 
         public static Dictionary<Char, int> FnCountWord(String text)
