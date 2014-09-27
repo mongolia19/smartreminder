@@ -24,7 +24,7 @@ namespace SmartReminder
         private System.Timers.Timer timerClock = new System.Timers.Timer();
         int alert_time;
         String[] Memery;
-        ArrayList DefinationPattern;
+        static ArrayList DefinationPattern;
         
         static String[] DefinPattern = { "是的", "为的", "定义是", "所谓是" };
         static String[] MethodPattern = { "首先", "其次", "最后", "第", "然后" };
@@ -206,7 +206,7 @@ namespace SmartReminder
             return asm_file;
 
         }
-         void get_string_array_into_arraylist(String [] string_array,ArrayList array)
+         static void  get_string_array_into_arraylist(String [] string_array,ArrayList array)
         {
 
             for (int i = 0; i < string_array.GetLength(0); i++)
@@ -291,7 +291,7 @@ namespace SmartReminder
 
             }
         }
-        String[] read_page_from_web(String PageContent) 
+        static String[] read_page_from_web(String PageContent) 
         {
             Regex regex = new Regex("(\r\n)+");
             PageContent = regex.Replace(PageContent, ".");
@@ -346,11 +346,11 @@ namespace SmartReminder
             cmd_Handler(answer);
 
         }
-        
 
-        private void ExtractButton_Click(object sender, EventArgs e)
+        public static String ExtractOneUrl(String url)
         {
-            String WebPageRaw = GetMainContentHelper.getDataFromUrl(webLinkTextBox.Text);
+
+            String WebPageRaw = GetMainContentHelper.getDataFromUrl(url);
             Match TitleMatch = Regex.Match(WebPageRaw, "<title>([^<]*)</title>", RegexOptions.IgnoreCase | RegexOptions.Multiline);
             String title = TitleMatch.Groups[1].Value;
 
@@ -362,73 +362,38 @@ namespace SmartReminder
 
             String SplitedWords = abstractor.Segment(extracted);
 
-           // ArrayList sortedList = CharCollector.WordFreqStatistic(SplitedWords);
+            // ArrayList sortedList = CharCollector.WordFreqStatistic(SplitedWords);
 
-            String TextForWordFreq=SplitedWords;
+            String TextForWordFreq = SplitedWords;
             TextForWordFreq = PreProcessTools.RemovePunctuation(TextForWordFreq);
             TextForWordFreq = PreProcessTools.RemoveCNStopWords(TextForWordFreq);
 
-           // Dictionary<Char, int> Testdic = CharCollector.FnCountWord(TextForWordFreq);
+            // Dictionary<Char, int> Testdic = CharCollector.FnCountWord(TextForWordFreq);
             Dictionary<String, int> Testdic = PreProcessTools.Stats(TextForWordFreq);
 
             ArrayList ArticleSentences = new ArrayList();
             String[] firstPageContent = read_page_from_web(extracted);
             get_string_array_into_arraylist(firstPageContent, ArticleSentences);
-            
-            
-            ArrayList keys=new ArrayList();
+
+
+            ArrayList keys = new ArrayList();
             /////////////////
             //////Remove english words and numbers in key words
-            foreach (String k in Testdic.Keys )
+            foreach (String k in Testdic.Keys)
             {
-            
+
                 keys.Add(k.ToString());
             }
-            //Regex rx = new Regex("^[\u4e00-\u9fa5]$");
-
-           
-            //     if (rx.IsMatch(keys[0].ToString()))
-            //  {
-
-            //  }
-            //  // 是
-            //  else
-            //  {
-
-            //      keys.RemoveAt(0);
-                 
-                
-            //  }
-            
-            //for (int i = 0; i < keys.Count; i++)//only keep Chinese charactors
-            //{
-			 
-            //  if (rx.IsMatch(keys[i].ToString()))
-            //  {
-
-            //  }
-            //  // 是
-            //  else
-            //  {
-
-            //      keys.RemoveAt(i);
-            //      if (i > 0)
-            //      {
-            //          i--;
-            //      }
-                
-            //  }
-            //    // 否
-            //}
-            int MaxBase =Testdic[keys[0].ToString()];//the count of most frequect word
-            Double[] weightArray= abstractor.weight(Testdic, ArticleSentences);
-            Double r= 0.05;
-            int[] selected = abstractor.GetHighestScoreIndex(weightArray,Convert.ToInt32( r*weightArray.GetLength(0)));
+          
+            int MaxBase = Testdic[keys[0].ToString()];//the count of most frequect word
+            Double[] weightArray = abstractor.weight(Testdic, ArticleSentences);
+            Double r = 0.05;
+            int[] selected = abstractor.GetHighestScoreIndex(weightArray, Convert.ToInt32(r * weightArray.GetLength(0)));
 
 
-            ArrayList afterExtract=new ArrayList();
-            
-            for (int i = 0; i < r*ArticleSentences.Count; i++)
+            ArrayList afterExtract = new ArrayList();
+
+            for (int i = 0; i < r * ArticleSentences.Count; i++)
             {
                 afterExtract = abstractor.DefinationExtractorReturnIndex(keys[i].ToString(), DefinationPattern, ArticleSentences, afterExtract);
                 //afterExtract = abstractor.DefinationExtractor(keys[i].ToString(), DefinationPattern, ArticleSentences, afterExtract);
@@ -440,7 +405,7 @@ namespace SmartReminder
                 afterExtract = abstractor.DefinationExtractorReturnIndex(title[i].ToString(), DefinationPattern, ArticleSentences, afterExtract);
             }
 
-            int [] selectedMoreDetail=new int[afterExtract.Count];
+            int[] selectedMoreDetail = new int[afterExtract.Count];
 
             for (int i = 0; i < afterExtract.Count; i++)
             {
@@ -453,31 +418,34 @@ namespace SmartReminder
 
             int[] TotalArticle = new int[ArticleSentences.Count];
 
-           TotalArticle=PreProcessTools.MarkIntArray(selected, TotalArticle);
+            TotalArticle = PreProcessTools.MarkIntArray(selected, TotalArticle);
 
-            HeadLineText.Text = AddSentencesTogether(TotalArticle, ArticleSentences);
+            String HeadLineText = AddSentencesTogether(TotalArticle, ArticleSentences);
 
             TotalArticle = PreProcessTools.MarkIntArray(selectedMoreDetail, TotalArticle);
 
-            //afterExtract = PreProcessTools.removeDuplicate(afterExtract);
-
-//          afterExtract = PreProcessTools.RemoveSameObj(afterExtract);
-            
-            ArrayList secs= Extractor.GetSections(extracted);
-            secs=Extractor.GetTitles(secs);
+            ArrayList secs = Extractor.GetSections(extracted);
+            secs = Extractor.GetTitles(secs);
             Extractor.RemoveDetails(secs, null);
-            LatestAnswertextBox.Text= "";
+           
 
-           //for (int i = 0; i < afterExtract.Count; i++)
-           //{
-
-           //    LatestAnswertextBox.Text += ((Q_n_A)afterExtract[i]).question + ".\r\n";
-           //}
-
-            LatestAnswertextBox.Text = AddSentencesTogether(TotalArticle, ArticleSentences);
+            String DetailText = AddSentencesTogether(TotalArticle, ArticleSentences);
 
 
-            CreateHtml(title, LatestAnswertextBox.Text, "");
+            //CreateHtml(title, LatestAnswertextBox.Text, "");
+            return DetailText;
+        
+        }
+
+
+        private void ExtractButton_Click(object sender, EventArgs e)
+        {
+
+            LatestAnswertextBox.Text = ExtractOneUrl(webLinkTextBox.Text);
+        
+
+
+            CreateHtml("Extracted", LatestAnswertextBox.Text, "");
 
 
         }
@@ -487,7 +455,7 @@ namespace SmartReminder
             StreamWriter sw = new StreamWriter(fs, Encoding.Default);
 
             String FirstPart = "<HTML><HEAD><meta http-equiv=Content-Type content=\"text/html;charset=gb2312\"><TITLE>";
-            String MidPart = "</TITLE></HEAD><BODY bgcolor='yellow' style='color:red'>";
+            String MidPart = "</TITLE></HEAD><BODY bgcolor='green' style='color:black'>";
             String LastPart = "</BODY></HTML> ";
             String Whole = FirstPart + title + MidPart + body + LastPart;
                 sw.Write(Whole);  //这里是写入的内容
