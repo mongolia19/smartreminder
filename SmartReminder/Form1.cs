@@ -255,12 +255,15 @@ namespace SmartReminder
         private void talk_button_Click(object sender, EventArgs e)
         {
 
-            String Humanwords = talk_textBox.Text.Trim().ToLower();
-            current_cmd = Humanwords;
-            answer=matcher.Match(Humanwords, sentenceList);
-            LatestAnswertextBox.Text = answer;
+            //String Humanwords = talk_textBox.Text.Trim().ToLower();
+            //current_cmd = Humanwords;
+            //answer=matcher.Match(Humanwords, sentenceList);
 
-            cmd_Handler(answer);
+            String MultiDocResult = ExtractMulityDocs(talk_textBox.Text);
+
+            LatestAnswertextBox.Text = MultiDocResult;
+
+            //cmd_Handler(answer);
 
            
         }
@@ -303,6 +306,56 @@ namespace SmartReminder
           
 
             return asm_file;
+        
+        }
+
+
+        public String ExtractMulityDocs(String question) 
+        {
+
+            ArrayList webList = new ArrayList();////store sentences search from the Web Page
+            ArrayList webHyperLinks = new ArrayList();
+            ArrayList abstractedList = new ArrayList();
+            String extracted = "";
+            String Humanwords = talk_textBox.Text.Trim().ToLower();
+
+            String WebPageRaw = GetMainContentHelper.getDataFromUrl("http://www.sogou.com/web?query=" + question);
+            webHyperLinks = GetMainContentHelper.GetHyperLinks(WebPageRaw);
+            //extracted = GetMainContentHelper.GetMainContent(WebPageRaw);
+            //String[] firstPageContent = read_page_from_web(extracted);
+            //get_string_array_into_arraylist(firstPageContent, webList);
+            int docNum=0;
+            if (webHyperLinks.Count<10)
+            {
+                docNum = 8;
+            }
+            else
+            {
+                docNum = 11;
+            }
+            for (int i = 0; i < docNum; i++)
+            {
+
+                extracted+=ExtractOneUrl(webHyperLinks[i].ToString())+"\r\n";
+                //WebPageRaw = GetMainContentHelper.getDataFromUrl(webHyperLinks[i].ToString());
+                //extracted = GetMainContentHelper.GetMainContent(WebPageRaw);
+
+                //String[] tempPageContent = read_page_from_web(extracted);
+
+                //get_string_array_into_arraylist(tempPageContent, webList);
+                //ArrayList extendedList = abstractor.GetAllSentenceContainingWordsInKeySentence(webList, current_cmd);
+                //webList = abstractor.GetRelatedSentencesFromExtendedSentenceList(webList, extendedList);
+                //webList = abstractor.GetAbstractedFromSentenceList(webList, current_cmd, 0.1);
+
+            }
+
+
+            return extracted;
+           
+
+
+
+        
         
         }
         private void button2_Click(object sender, EventArgs e)
@@ -351,6 +404,10 @@ namespace SmartReminder
         {
 
             String WebPageRaw = GetMainContentHelper.getDataFromUrl(url);
+            if (WebPageRaw.Length<=0)
+            {
+                return "";
+            }
             Match TitleMatch = Regex.Match(WebPageRaw, "<title>([^<]*)</title>", RegexOptions.IgnoreCase | RegexOptions.Multiline);
             String title = TitleMatch.Groups[1].Value;
 
@@ -360,6 +417,10 @@ namespace SmartReminder
             //webHyperLinks = GetMainContentHelper.GetHyperLinks(WebPageRaw);
             String extracted = GetMainContentHelper.GetMainContent(WebPageRaw);
 
+            if ( extracted.Length <= 0)
+            {
+                return "";
+            }
             String SplitedWords = abstractor.Segment(extracted);
 
             // ArrayList sortedList = CharCollector.WordFreqStatistic(SplitedWords);
@@ -433,7 +494,7 @@ namespace SmartReminder
 
 
             //CreateHtml(title, LatestAnswertextBox.Text, "");
-            return DetailText;
+            return HeadLineText +"\r\n Detail:"+ DetailText;
         
         }
 

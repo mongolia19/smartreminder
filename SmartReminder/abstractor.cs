@@ -67,7 +67,10 @@ namespace SmartReminder
        public static int[] GetHighestScoreIndex(Double [] allIndex,int ChosenNum) 
        {
            ArrayList tempList = new ArrayList();
-
+           if (ChosenNum<=0)
+           {
+               ChosenNum = 1;
+           }
            for (int i = 0; i < ChosenNum; i++)
            {
                tempList.Add("0");
