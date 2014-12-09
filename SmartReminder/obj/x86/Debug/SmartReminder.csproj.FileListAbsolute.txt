@@ -11,14 +11,9 @@ D:\Users\MeAndroid\Documents\GitHub\smartreminder\SmartReminder\obj\x86\Debug\Sm
 D:\Users\MeAndroid\Documents\GitHub\smartreminder\SmartReminder\obj\x86\Debug\SmartReminder.pdb
 D:\Users\MeAndroid\Documents\GitHub\smartreminder\SmartReminder\bin\Debug\SmartReminder.exe
 D:\Users\MeAndroid\Documents\GitHub\smartreminder\SmartReminder\bin\Debug\SmartReminder.pdb
-D:\Users\MeAndroid\Documents\GitHub\smartreminder\SmartReminder\obj\x86\Debug\ResolveAssemblyReference.cache
 D:\Users\MeAndroid\Documents\GitHub\smartreminder\SmartReminder\obj\x86\Debug\SmartReminder.Form1.resources
 D:\Users\MeAndroid\Documents\GitHub\smartreminder\SmartReminder\obj\x86\Debug\SmartReminder.Properties.Resources.resources
-D:\Users\MeAndroid\Documents\GitHub\smartreminder\SmartReminder\obj\x86\Debug\GenerateResource.read.1.tlog
-D:\Users\MeAndroid\Documents\GitHub\smartreminder\SmartReminder\obj\x86\Debug\GenerateResource.write.1.tlog
 D:\Users\MeAndroid\Documents\GitHub\smartreminder\SmartReminder\bin\Debug\SmartReminder.exe.config
-D:\Users\MeAndroid\Documents\GitHub\smartreminder\SmartReminder\obj\x86\Debug\GenerateResource-ResGen.read.1.tlog
-D:\Users\MeAndroid\Documents\GitHub\smartreminder\SmartReminder\obj\x86\Debug\GenerateResource-ResGen.write.1.tlog
 F:\Users\Android\Documents\GitHub\smartreminder\SmartReminder\bin\Debug\SmartReminder.exe.config
 F:\Users\Android\Documents\GitHub\smartreminder\SmartReminder\bin\Debug\SmartReminder.exe
 F:\Users\Android\Documents\GitHub\smartreminder\SmartReminder\bin\Debug\SmartReminder.pdb
@@ -31,3 +26,8 @@ F:\Users\Android\Documents\GitHub\smartreminder\SmartReminder\bin\Debug\Newtonso
 F:\Users\Android\Documents\GitHub\smartreminder\SmartReminder\bin\Debug\Newtonsoft.Json.pdb
 F:\Users\Android\Documents\GitHub\smartreminder\SmartReminder\bin\Debug\Newtonsoft.Json.xml
 F:\Users\Android\Documents\GitHub\smartreminder\SmartReminder\obj\x86\Debug\SmartReminder.csprojResolveAssemblyReference.cache
+D:\Users\MeAndroid\Documents\GitHub\smartreminder\SmartReminder\obj\x86\Debug\SmartReminder.csproj.GenerateResource.Cache
+D:\Users\MeAndroid\Documents\GitHub\smartreminder\SmartReminder\bin\Debug\Newtonsoft.Json.dll
+D:\Users\MeAndroid\Documents\GitHub\smartreminder\SmartReminder\bin\Debug\Newtonsoft.Json.pdb
+D:\Users\MeAndroid\Documents\GitHub\smartreminder\SmartReminder\bin\Debug\Newtonsoft.Json.xml
+D:\Users\MeAndroid\Documents\GitHub\smartreminder\SmartReminder\obj\x86\Debug\SmartReminder.csprojResolveAssemblyReference.cache
