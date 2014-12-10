@@ -223,7 +223,17 @@ namespace SmartReminder
         private void Form1_Load(object sender, EventArgs e)
         {
             //Memery= read_file("g:\\enstopword.txt");
+            String input = ",d,n,ns,nt,ns,ns,nt";
+            if (Syntactic_Parser.a.IsMatch(input))
+            { }
+            string left=Syntactic_Parser.NP.Replace(input, "");
+            if (Syntactic_Parser.NP.IsMatch(input))
+            {
+                input = "success!";
             
+            
+            };
+            //Regex.IsMatch(input, Syntactic_Parser.NP);
             matcher = new sentence_matcher();
             sentenceList = new ArrayList();
             read_all_file_in_dir("D:\\TrainTxt\\",sentenceList);

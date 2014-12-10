@@ -83,6 +83,7 @@
     <Compile Include="Q_n_A.cs" />
     <Compile Include="sentenceWithScore.cs" />
     <Compile Include="sentence_matcher.cs" />
+    <Compile Include="Syntactic_Parser.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

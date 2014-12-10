@@ -54,7 +54,7 @@ namespace SmartReminder
                 foreach (var item in results["words"].Children())
                 {
                     Newtonsoft.Json.Linq.JObject word = Newtonsoft.Json.Linq.JObject.Parse(item.ToString());
-                    sb.Append(word["word"].ToString() + " ");
+                    sb.Append(word["word"].ToString()+"-"+word["attr"].ToString() + " ");
                 }
             }
             catch
