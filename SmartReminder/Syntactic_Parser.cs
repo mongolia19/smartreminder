@@ -24,9 +24,9 @@ namespace SmartReminder
         public static Regex a = new Regex(@",a");//adjective
 
 
-        public static Regex NP = new Regex(@"(" + j + "|" + r + "|" + i + "|" + s + "|" + nr + "|" + ns + "|" + nt + "|" + nz + "|" + an + "|" + SingleN+")+");
-        
-        
+        public static Regex NP = new Regex(@"(,an|,ag|,a|,q)*"+"(" + j + "|" + r + "|" + i + "|" + s + "|" + nr + "|" + ns + "|" + nt + "|" + nz + "|" + an + "|" + SingleN+"|,vn|,l|,f)+");
+
+        public static Regex VP = new Regex(@"(,ad|,dg|,vg|,v|,vd)*(,c)*(,ad|,dg|,vg|,v|,vd)+(,bei|,ba|,p|,z|,vd)*");
 
     }
 }
