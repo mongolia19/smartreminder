@@ -226,6 +226,8 @@ namespace SmartReminder
             String input = ",d,a,an,an,a,ag,ag,ag,n,ns,nt,ns,ns,nt,a,ag,a,,vg,vg,v,v,vg,an,a,ag,ag,ag,n,ns,nt,ns,dd,yy";
             MatchCollection MC =Syntactic_Parser.NP.Matches(input);
             
+            string s1 = MC[0].Value;
+            string s2 = MC[1].Value;
             string left=Syntactic_Parser.NP.Replace(input, "");
 
             if (Syntactic_Parser.NP.IsMatch(input))
@@ -233,7 +235,8 @@ namespace SmartReminder
                 input = "success!";
             
             
-            };
+            }
+
             left = Syntactic_Parser.VP.Replace(left, "");
             //Regex.IsMatch(input, Syntactic_Parser.NP);
             matcher = new sentence_matcher();
