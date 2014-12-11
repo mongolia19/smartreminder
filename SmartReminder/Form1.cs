@@ -14,6 +14,12 @@ using System.IO;
 
 namespace SmartReminder
 {
+    /// <summary>
+    /// To Do :
+    /// 1.First use tf--idf to extract sentences 
+    /// 2.Tagging the extracted sentences ,store them to file
+    /// 3.Extract words that are shared by different articles on the same subject
+    /// </summary>
     public partial class Form1 : Form
     {
         public String answer;
@@ -211,9 +217,13 @@ namespace SmartReminder
 
             for (int i = 0; i < string_array.GetLength(0); i++)
             {
-                Q_n_A tempq = new Q_n_A(string_array[i].ToString(), "");
+                if (string_array[i].Length>0)
+                {
+                    Q_n_A tempq = new Q_n_A(string_array[i].ToString(), "");
 
-                array.Add(tempq);
+                    array.Add(tempq);
+                }
+               
 
             }
 
@@ -223,8 +233,10 @@ namespace SmartReminder
         private void Form1_Load(object sender, EventArgs e)
         {
             //Memery= read_file("g:\\enstopword.txt");
-            String input = ",d,a,an,an,a,ag,ag,ag,n,ns,nt,ns,ns,nt,a,ag,a,,vg,vg,v,v,vg,an,a,ag,ag,ag,n,ns,nt,ns,dd,yy";
-            MatchCollection MC =Syntactic_Parser.NP.Matches(input);
+            String input = "这些-r 数据-n 文件-n 貌似-v 是-v 有-v 一定-d 的-uj 格式-n 的-uj 我-r 刚-d 开始-v 也-d 试图-v 把-p 他们-r 当做-v 标准-n 的-uj xml-en 文档-n 来-v 处理-vn 因为-p 下载-v 包里还-nr 像模像样-l 的-uj 包含-v 了-v 一个-m SGMLDTD-en 的-uj 文件-n 但-c 老是-n 报-n 错-n 最终-d 发现-v 很多-m 的-uj 记录-v 格式-n 是-v 错误-n 的-uj 而且-c 错误-n 千奇百怪-i 所以-c 干脆-d 放弃-v 直接-ad 把-p 它们-r 全部-m 看做-v 文本-n 文件-n 来-v 处理-vn 得了-n";
+            input = input.Replace(" ", "");
+            input = input.Replace("-", ",");
+            MatchCollection MC =Syntactic_Parser.NP_VP_NP.Matches(input);
             
             string s1 = MC[0].Value;
             string s2 = MC[1].Value;
@@ -450,8 +462,10 @@ namespace SmartReminder
             ArrayList ArticleSentences = new ArrayList();
             String[] firstPageContent = read_page_from_web(extracted);
             get_string_array_into_arraylist(firstPageContent, ArticleSentences);
+            string TaggedSentence=abstractor.Segment(((Q_n_A)ArticleSentences[11]).question);
+            TaggedSentence = TaggedSentence.Replace(" ", "").Replace("-", ",");
 
-
+            MatchCollection MC = Syntactic_Parser.NP_VP_NP.Matches(TaggedSentence);
             ArrayList keys = new ArrayList();
             /////////////////
             //////Remove english words and numbers in key words

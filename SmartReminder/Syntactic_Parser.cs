@@ -20,13 +20,16 @@ namespace SmartReminder
         static Regex nt = new Regex(@",nt");//group org
         static Regex nz = new Regex(@",nz");//special noun
         static Regex an = new Regex(@",an");//adjective noun
-        
+
         public static Regex a = new Regex(@",a");//adjective
 
+        //[a-zA-Z0-9_\u4e00-\u9fa5]+
+        static String NP_Pattern = "(([0-9_\u4e00-\u9fa5]+)(,an|,ag|,a|,q|,m))*" + "([0-9_\u4e00-\u9fa5]+(" + j + "|" + r + "|" + i + "|" + s + "|" + nr + "|" + ns + "|" + nt + "|" + nz + "|" + an + "|" + SingleN + "|,vn|,l|,f|,uj))+";
+        public static Regex NP = new Regex(@"(([0-9_\u4e00-\u9fa5]+)(,an|,ag|,a|,q|,m))*" + "([0-9_\u4e00-\u9fa5]+(" + j + "|" + r + "|" + i + "|" + s + "|" + nr + "|" + ns + "|" + nt + "|" + nz + "|" + an + "|" + SingleN + "|,vn|,l|,f|,uj))+");
+        const String VP_Pattern = "([0-9_\u4e00-\u9fa5]+(,ad|,dg|,vg|,v|,vd|,d))*([0-9_\u4e00-\u9fa5]+(,c))*([0-9_\u4e00-\u9fa5]+(,ad|,dg|,vg|,v|,vd|,d))+([0-9_\u4e00-\u9fa5]+(,bei|,ba|,p|,z|,vd))*";
+        public static Regex VP = new Regex(@"([0-9_\u4e00-\u9fa5]+(,ad|,dg|,vg|,v|,vd|,d))*([0-9_\u4e00-\u9fa5]+(,c))*([0-9_\u4e00-\u9fa5]+(,ad|,dg|,vg|,v|,vd|,d))+([0-9_\u4e00-\u9fa5]+(,bei|,ba|,p|,z|,vd))*");
 
-        public static Regex NP = new Regex(@"(,an|,ag|,a|,q)*"+"(" + j + "|" + r + "|" + i + "|" + s + "|" + nr + "|" + ns + "|" + nt + "|" + nz + "|" + an + "|" + SingleN+"|,vn|,l|,f)+");
-
-        public static Regex VP = new Regex(@"(,ad|,dg|,vg|,v|,vd)*(,c)*(,ad|,dg|,vg|,v|,vd)+(,bei|,ba|,p|,z|,vd)*");
+        public static Regex NP_VP_NP = new Regex(@NP_Pattern + VP_Pattern + NP_Pattern);
 
     }
 }
