@@ -17,7 +17,64 @@ namespace SmartReminder
 
         static String[] CNStopWords = { "我", "你", "的", "得", "这", "那", "他", "是", "为", "在", "了", "有", "就", "到", "个", "不", "否", "也", "还", "以", "一", "人", "但", "要", "把", "用", "靠", "中", "出现", "来", "它", "们", "最", "可", "于", "和", "等" };
 
+        public static void get_string_array_into_arraylist(String[] string_array, ArrayList array)
+        {
 
+            for (int i = 0; i < string_array.GetLength(0); i++)
+            {
+                if (string_array[i].Length > 0)
+                {
+                    Q_n_A tempq = new Q_n_A(string_array[i].ToString(), "");
+
+                    array.Add(tempq);
+                }
+
+
+            }
+
+        }
+
+        public static String[] read_page_from_web(String PageContent)
+        {
+            Regex regex = new Regex("(\r\n)+");
+            PageContent = regex.Replace(PageContent, ".");
+
+            String[] asm_file = PageContent.Split('.', '!', '?', ':', '-', '。', '！', '？', ';');
+            // = new String[tempArray.Count];
+
+
+
+
+            return asm_file;
+
+        }
+
+        public static Hashtable Get_idf_table(String article) 
+        {
+            Regex pattern = new Regex(@"(-(([a-zA-Z]+)|@)-)");
+
+            Hashtable ht = new Hashtable();
+
+            String [] ArticalArray= (article).Split(' ');
+
+            
+            for (int i = 0; i < ArticalArray.Length; i++)
+            {
+                ArticalArray[i] = pattern.Replace(ArticalArray[i], ",");
+            }
+
+            for (int i = 0; i < ArticalArray.Length; i++)
+            {
+                String[] splitted = ArticalArray[i].Split(',');
+                if ((!ht.ContainsKey(splitted[0].ToString()))&&(splitted[0].Length>0))
+	            {
+                    ht.Add(splitted[0].ToString(), splitted[1].ToString());
+	            } 
+            }
+            //ArrayList ArticleAL=new ArrayList();
+           // get_string_array_into_arraylist(ArticalArray, ArticleAL);
+            return ht;
+        }
       public static Dictionary<String,int> Stats(String article)
         {
             MatchCollection mc = Regex.Matches(article, @"\b\w+\b");

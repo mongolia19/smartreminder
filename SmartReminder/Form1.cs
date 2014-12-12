@@ -72,7 +72,7 @@ namespace SmartReminder
             foreach (string s in fn)
             {
                 String [] tempFileName = read_file( s);
-                get_string_array_into_arraylist(tempFileName, memory);
+                PreProcessTools. get_string_array_into_arraylist(tempFileName, memory);
                 
             }
 
@@ -212,22 +212,7 @@ namespace SmartReminder
             return asm_file;
 
         }
-         static void  get_string_array_into_arraylist(String [] string_array,ArrayList array)
-        {
-
-            for (int i = 0; i < string_array.GetLength(0); i++)
-            {
-                if (string_array[i].Length>0)
-                {
-                    Q_n_A tempq = new Q_n_A(string_array[i].ToString(), "");
-
-                    array.Add(tempq);
-                }
-               
-
-            }
-
-        }
+      
         
 
         private void Form1_Load(object sender, EventArgs e)
@@ -321,21 +306,7 @@ namespace SmartReminder
 
             }
         }
-        static String[] read_page_from_web(String PageContent) 
-        {
-            Regex regex = new Regex("(\r\n)+");
-            PageContent = regex.Replace(PageContent, ".");
-
-            String[] asm_file = PageContent.Split('.', '!', '?', ':', '-', '。', '！', '？', ';');
-            // = new String[tempArray.Count];
-            
-
-          
-
-            return asm_file;
-        
-        }
-
+     
 
         public String ExtractMulityDocs(String question) 
         {
@@ -396,18 +367,18 @@ namespace SmartReminder
             String WebPageRaw=GetMainContentHelper.getDataFromUrl("http://www.baidu.com/s?wd=" + current_cmd);
             webHyperLinks = GetMainContentHelper.GetHyperLinks(WebPageRaw);
             extracted = GetMainContentHelper.GetMainContent(WebPageRaw);
-            String[] firstPageContent = read_page_from_web(extracted);
-            get_string_array_into_arraylist(firstPageContent, webList);
+            String[] firstPageContent =PreProcessTools. read_page_from_web(extracted);
+            PreProcessTools.get_string_array_into_arraylist(firstPageContent, webList);
 
             for (int i = 0; i < webHyperLinks.Count/2; i++)
            
             {
                 WebPageRaw = GetMainContentHelper.getDataFromUrl(webHyperLinks[i].ToString());
                  extracted= GetMainContentHelper.GetMainContent(WebPageRaw);
-             
-                 String[] tempPageContent = read_page_from_web(extracted);
-                  
-                 get_string_array_into_arraylist(tempPageContent, webList);
+
+                 String[] tempPageContent = PreProcessTools.read_page_from_web(extracted);
+
+                 PreProcessTools.get_string_array_into_arraylist(tempPageContent, webList);
                 ArrayList extendedList= abstractor.GetAllSentenceContainingWordsInKeySentence(webList, current_cmd);
                  webList = abstractor.GetRelatedSentencesFromExtendedSentenceList(webList,extendedList );
                  //webList = abstractor.GetAbstractedFromSentenceList(webList, current_cmd, 0.1);
@@ -451,7 +422,7 @@ namespace SmartReminder
             String SplitedWords = abstractor.Segment(extracted);
 
             // ArrayList sortedList = CharCollector.WordFreqStatistic(SplitedWords);
-
+            Hashtable ht= PreProcessTools.Get_idf_table(SplitedWords);
             String TextForWordFreq = SplitedWords;
             TextForWordFreq = PreProcessTools.RemovePunctuation(TextForWordFreq);
             TextForWordFreq = PreProcessTools.RemoveCNStopWords(TextForWordFreq);
@@ -460,8 +431,8 @@ namespace SmartReminder
             Dictionary<String, int> Testdic = PreProcessTools.Stats(TextForWordFreq);
 
             ArrayList ArticleSentences = new ArrayList();
-            String[] firstPageContent = read_page_from_web(extracted);
-            get_string_array_into_arraylist(firstPageContent, ArticleSentences);
+            String[] firstPageContent = PreProcessTools.read_page_from_web(extracted);
+            PreProcessTools.get_string_array_into_arraylist(firstPageContent, ArticleSentences);
             string TaggedSentence=abstractor.Segment(((Q_n_A)ArticleSentences[11]).question);
             TaggedSentence = TaggedSentence.Replace(" ", "").Replace("-", ",");
 
