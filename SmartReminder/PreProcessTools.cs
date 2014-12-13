@@ -17,6 +17,14 @@ namespace SmartReminder
 
         static String[] CNStopWords = { "我", "你", "的", "得", "这", "那", "他", "是", "为", "在", "了", "有", "就", "到", "个", "不", "否", "也", "还", "以", "一", "人", "但", "要", "把", "用", "靠", "中", "出现", "来", "它", "们", "最", "可", "于", "和", "等" };
 
+        public static string cleanTaggedData(string TaggedData)
+        { 
+            Regex tags=new Regex(@"-([A-Za-z]+)-([0-9]+) ");
+
+            string cleaned= tags.Replace(TaggedData, " ");
+            return cleaned;
+        }
+
         public static void get_string_array_into_arraylist(String[] string_array, ArrayList array)
         {
 

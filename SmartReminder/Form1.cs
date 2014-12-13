@@ -424,6 +424,9 @@ namespace SmartReminder
             // ArrayList sortedList = CharCollector.WordFreqStatistic(SplitedWords);
             Hashtable ht= PreProcessTools.Get_idf_table(SplitedWords);
             String TextForWordFreq = SplitedWords;
+            String CleanedData = TextForWordFreq.Replace(".", "");
+            CleanedData = PreProcessTools.cleanTaggedData(CleanedData);
+
             TextForWordFreq = PreProcessTools.RemovePunctuation(TextForWordFreq);
             TextForWordFreq = PreProcessTools.RemoveCNStopWords(TextForWordFreq);
 
